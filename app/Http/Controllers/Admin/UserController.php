@@ -11,9 +11,22 @@ use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        // $users = User::paginate(5);
+
+        // return view('admin.users.index', compact('users'));
+
+        $query = $request->input('query');
+        // $users = User::where(['first_name','middle_name','last_name'], 'like', "%$query%")->paginate(5);
+       // Validate and sanitize the input
+       $query = htmlspecialchars(strip_tags($query));
+
+       $users = User::where(function($q) use ($query) {
+           $q->where('first_name', 'like', "%$query%")
+             ->orWhere('middle_name', 'like', "%$query%")
+             ->orWhere('last_name', 'like', "%$query%");
+       })->paginate(5);
 
         return view('admin.users.index', compact('users'));
     }
@@ -24,9 +37,15 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        
         $validated = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email', 
+            'first_name' => 'required',
+            'middle_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users,email',   
+            'phone' => 'required',
+            'birth_date'=>'required',
+            'password' => 'required|min:8',
             'password' => 'required|min:8',
         ]);
     
@@ -94,4 +113,12 @@ class UserController extends Controller
 
         return back()->with('message', 'User deleted.');
     }
+
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+    $users = User::where('name', 'like', "%$query%")->paginate(10);
+
+    return view('users.index', compact('users'));
+}
 }
