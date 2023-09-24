@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\PermissionController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/api/date', [DateController::class, 'fetchDate']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,10 +29,6 @@ Route::get('/dashboard', function () {
 
 
 
-// // Admin dashboard
-// Route::get('/admin', function () {
-//     return view('admin.index');
-// })->middleware(['auth','role:admin', 'verified'])->name('admin.index');
 
 Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->group(function () {
   
@@ -59,8 +56,6 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     Route::post('/users/{user}/roles', [UserController::class, 'assignRole'])->name('users.roles');
     Route::delete('/users/{user}/roles/{role}', [UserController::class, 'removeRole'])->name('users.roles.remove');
     Route::post('/users/{user}/permissions', [UserController::class, 'givePermission'])->name('users.permissions');
-    Route::delete('/users/{user}/permissions/{permission}', [UserController::class, 'revokePermission'])->name('users.permissions.revoke');
-    // Route::get('/users/search', 'UserController@search')->name('users.index');
 });
 
 
