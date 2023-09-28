@@ -13,20 +13,17 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        // $users = User::paginate(5);
-
-        // return view('admin.users.index', compact('users'));
+       
 
         $query = $request->input('query');
-        // $users = User::where(['first_name','middle_name','last_name'], 'like', "%$query%")->paginate(5);
-       // Validate and sanitize the input
+     
        $query = htmlspecialchars(strip_tags($query));
 
        $users = User::where(function($q) use ($query) {
            $q->where('first_name', 'like', "%$query%")
              ->orWhere('middle_name', 'like', "%$query%")
              ->orWhere('last_name', 'like', "%$query%");
-       })->paginate(5);
+       }) ->orderBy('created_at', 'desc')->paginate(5);
 
         return view('admin.users.index', compact('users'));
     }

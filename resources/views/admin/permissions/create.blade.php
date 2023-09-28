@@ -1,4 +1,9 @@
-<x-admin-layout>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-sm text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Create Permission') }}
+        </h2>
+    </x-slot>
     <div class="py-10 px-2 w-full">
         <h1 class=" pb-4 font-bold">CREATE NEW PERMISSION</h1>
         <div class=" rounded-sm bg-white ">
@@ -24,4 +29,4 @@
             </form>
         </div>
     </div>
-</x-admin-layout>
+</x-app-layout>
