@@ -1,11 +1,12 @@
-<x-admin-layout>
-    <div class="py-12 w-full  ">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-sm text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Edit Role of User') }}
+        </h2>
+    </x-slot>
+    <div class="py-10 w-full  ">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2 py-12">
-                {{-- <div class="flex p-2">
-                    <a href="{{ route('admin.users.index') }}"
-                        class="px-4 py-2 bg-purple-700 hover:bg-purple-500 text-slate-100 rounded-md">Users Index</a>
-                </div> --}}
 
 
                 <div class="flex items-center space-x-4">
@@ -103,4 +104,4 @@
         </div>
     </div>
     </div>
-</x-admin-layout>
+</x-app-layout>

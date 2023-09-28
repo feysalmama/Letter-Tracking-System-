@@ -1,13 +1,20 @@
-<x-admin-layout>
-    <div class="py-12 w-full">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+<x-app-layout>
+
+    <x-slot name="header">
+        <h2 class="font-semibold text-sm text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Users') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-10 w-full">
+        <div class="max-w-7xl mx-auto ">
 
             <div class="flex justify-between items-center">
                 <div class="my-2 flex sm:flex-row flex-col">
                     <div class="flex flex-row mb-1 sm:mb-0">
                         <div class="relative">
                             <select
-                                class="appearance-none h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-1 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                class="appearance-none h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                 <option>5</option>
                                 <option>10</option>
                                 <option>20</option>
@@ -16,7 +23,7 @@
                         </div>
                         <div class="relative">
                             <select
-                                class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-1 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
+                                class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
                                 <option>All</option>
                                 <option>Active</option>
                                 <option>Inactive</option>
@@ -32,37 +39,25 @@
                                 </path>
                             </svg>
                         </span>
-                        <input type="text" name="query" placeholder="Search users" value="{{ request()->input('query') }}"
-                            class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-1 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
-                        <button type="submit" class="absolute inset-y-0 right-0 px-4 py-1 bg-gray-200 text-gray-700 hover:bg-gray-300">
+                        <input type="text" name="query" placeholder="Search users"
+                            value="{{ request()->input('query') }}"
+                            class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                        <button type="submit"
+                            class="absolute inset-y-0 right-0 px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300">
                             Search
                         </button>
                     </form>
-                    
-                    {{-- <div class="block relative">
-                        <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
-                            <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
-                                <path
-                                    d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
-                                </path>
-                            </svg>
-                        </span>
-                        <input placeholder="Search"
-                            class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-1 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
-                    </div> --}}
-                    {{-- <form method="GET" action="{{ route('admin.users.index') }}">
-                        <input type="text" name="query" placeholder="Search users...">
-                        <button type="submit">Search</button>
-                    </form> --}}
+
+
                 </div>
 
-                <!-- Modal toggle -->
-                <div >
-                    <a  href="{{ route('admin.users.create') }}"
-                        class="flex items-center justify-center px-3 py-1 space-x-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50">
+
+                <div>
+                    <a href="{{ route('admin.users.create') }}"
+                        class="flex items-center justify-center px-3 py-2 space-x-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50">
                         + Add User
                     </a>
-                   
+
                 </div>
             </div>
             <div class="flex flex-col">
@@ -80,7 +75,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-gray-600 text-sm font-light">
-                                   
+
                                     @foreach ($users as $user)
                                         <tr class="border-b border-gray-200 hover:bg-gray-100">
 
@@ -90,21 +85,21 @@
                                                         <img class="w-6 h-6 rounded-full"
                                                             src="https://randomuser.me/api/portraits/men/1.jpg" />
                                                     </div>
-                                                    <span>{{ $user->first_name . ' ' . $user->last_name  }}</span>
+                                                    <span>{{ $user->first_name . ' ' . $user->last_name }}</span>
                                                 </div>
                                             </td>
 
                                             <td class="py-3 px-6 text-left">
-                                               
+
                                                 @foreach ($user->roles as $role)
                                                     @if ($loop->iteration <= 3)
                                                         <span
                                                             class="bg-purple-200 text-purple-600 py-1 px-3 rounded-sm text-xs">{{ $role['name'] }}</span>
                                                     @else
-                                                    ...
-                                                        @break
-                                                    @endif
-                                                @endforeach
+                                                        ...
+                                                    @break
+                                                @endif
+                                            @endforeach
 
                                         </td>
                                         <td class="py-3 px-6 text-center">
@@ -169,6 +164,6 @@
         </div>
 
     </div>
-</div>
 
-</x-admin-layout>
+
+</x-app-layout>
