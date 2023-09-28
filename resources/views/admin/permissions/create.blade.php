@@ -4,29 +4,33 @@
             {{ __('Create Permission') }}
         </h2>
     </x-slot>
-    <div class="py-10 px-2 w-full">
-        <h1 class=" pb-4 font-bold">CREATE NEW PERMISSION</h1>
-        <div class=" rounded-sm bg-white ">
-            <div class="flex justify-between items-center rounded-t-md text-white bg-gray-400  h-14 p-3 overflow-hidden">
-                <h3>Add mew permission</h3>
-                <a class=" flex bg-red-400 py-1 items-center gap-1 px-2 rounded-md text-black  "
-                    href="{{ route('admin.permissions.index') }}">
-                    <i class="fa-regular fa-eye text-white font-xl"></i>
-                    See All permissions
-                </a>
-            </div>
-            <form method="POST" action="{{ route('admin.permissions.store') }}">
-                @csrf
-                <div class=" p-6">
-                    <input type="text" name="name" class=" outline outline-blue-300 outline-1 w-full rounded-md"
-                        placeholder="Permission Type">
+    <div class="py-12 w-full">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2">
+                <h1 class=" p-2 font-extrabold">CREATE NEW ROLES</h1>
+                <form method="POST" action="{{ route('admin.permissions.store') }}">
+                    @csrf
+                    <div class="flex flex-col p-2 bg-slate-100">
+                        <div class=" p-6">
+                            <input type="text" name="name"
+                                class=" outline outline-blue-300 outline-1 w-full rounded-md"
+                                placeholder="Permission Type">
+                        </div>
+                        <div class=" flex gap-2 m-2">
+                            <button type="submit"
+                                class=" bg-blue-500 px-2 py-2 rounded-md text-white flex items-center gap-1 ">
+                                {{-- <i class="fa-regular fa-floppy-disk font-bold w-4"></i> --}}
+                                Save Permission
+                            </button>
+                            <a class=" bg-red-400  px-6 py-2 rounded-md text-white flex items-center "
+                                href="{{ route('admin.permissions.index') }}">
+                                cancel
+                            </a>
+                        </div>
+                    </div>
 
-                    <button type="submit"
-                        class=" bg-gray-500 my-4 px-6 py-2 rounded-md text-white flex items-center gap-1 ">
-                        <i class="fa-regular fa-floppy-disk font-bold w-4"></i>
-                        Save Permission
-                    </button>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </x-app-layout>
