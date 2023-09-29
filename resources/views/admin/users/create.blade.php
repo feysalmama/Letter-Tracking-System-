@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-10 w-full">
+    <div class="py-2 w-full">
         <div class=" mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col">
                 <div class="space-y-8 divide-y divide-gray-200 w-full mt-10">
@@ -20,7 +20,7 @@
                                     name</label>
                                 <input type="text" id="first_name" name="first_name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="John" required>
+                                    placeholder="first name" required>
                                 @error('first_name')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
@@ -32,7 +32,7 @@
                                     name</label>
                                 <input type="text" id="last_name" name="last_name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Doe" required>
+                                    placeholder="last name" required>
                                 @error('last_name')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
@@ -43,7 +43,7 @@
                                     Name</label>
                                 <input type="text" id="middle_name" name="middle_name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Flowbite" required>
+                                    placeholder="middle name" required>
                                 @error('middle_name')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
@@ -54,7 +54,7 @@
                                     number</label>
                                 <input type="tel" id="phone" name="phone"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="123-45-678"  required>
+                                    placeholder="phone number"  required>
                                     @error('phone')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
@@ -88,7 +88,7 @@
                                 address</label>
                             <input type="email" id="email" name="email"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="john.doe@company.com" required>
+                                placeholder="email" required>
                         </div>
                         <div class="mb-6">
                             <label for="password"

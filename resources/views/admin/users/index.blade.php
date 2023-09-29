@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-10 w-full">
+    <div class="py-2 w-full">
         <div class="max-w-7xl mx-auto ">
 
             <div class="flex justify-between items-center">
@@ -152,18 +152,18 @@
 
                                             </div>
 
-                    </div>
-                    </td>
-                    </tr>
-                    @endforeach
-                    </tbody>
-                    </table>
-                </div>
-                {{ $users->links() }}
-            </div>
-        </div>
 
-    </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    {{ $users->links() }}
+                </div>
+            </div>
+
+        </div>
 
 
 </x-app-layout>
