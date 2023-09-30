@@ -10,7 +10,7 @@
 
 
 
-    <div class="py-10 w-full">
+    <div class="py-2 w-full">
         <div class="max-w-7xl mx-auto ">
 
             <div class="flex justify-between items-center">

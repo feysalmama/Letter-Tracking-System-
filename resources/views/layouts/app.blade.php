@@ -17,7 +17,7 @@
     </head>
     <body class="font-sans antialiased">
 
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-white">
 
             <aside id="default-sidebar"
                 class="fixed top-0 left-0 z-40 w-56 h-screen transition-transform -translate-x-full sm:translate-x-0"
@@ -128,14 +128,14 @@
             </aside>
 
             
-            <div class="px-4 sm:ml-64">
+            <div class="sm:ml-60">
                 @include('layouts.navigation')
                 
     
                 <!-- Page Heading -->
                 @if (isset($header))
-                    <header class="bg-white shadow">
-                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <header class="bg-white shadow mt-24">
+                        <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
                             {{ $header }}
                         </div>
                     </header>

@@ -4,7 +4,7 @@
             {{ __('Create Role') }}
         </h2>
     </x-slot>
-    <div class="py-10 w-full">
+    <div class="py-2 w-full">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2">
                 <h1 class=" p-2 font-extrabold ml-3">CREATE NEW ROLES</h1>
