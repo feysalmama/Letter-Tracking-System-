@@ -10,7 +10,7 @@
                 <h1 class=" p-2 font-extrabold">CREATE NEW ROLES</h1>
                 <form method="POST" action="{{ route('admin.permissions.store') }}">
                     @csrf
-                    <div class="flex flex-col p-2 bg-slate-100">
+                    <div class="flex flex-col p-2 bg-slate-50">
                         <div class=" p-6">
                             <input type="text" name="name"
                                 class=" outline outline-blue-300 outline-1 w-full rounded-md"

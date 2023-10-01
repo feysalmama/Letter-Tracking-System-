@@ -68,9 +68,9 @@
                                 <tbody class="text-gray-600 text-sm font-light">
 
                                     @foreach ($roles as $role)
-                                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                        <tr class="border-b border-gray-200 hover:bg-gray-4cd00">
 
-                                            <td class="py-3 px-6 text-left capitalize">
+                                            <td class="py-3 dark:text-white px-6 text-left capitalize">
                                                 <div class="flex items-center">
                                                     <span>{{ $role->name }}</span>
                                                 </div>
@@ -90,7 +90,7 @@
 
                                         </td>
 
-                                        <td class="py-3 px-6 text-center">
+                                        <td class="py-3 px-6 text-center dark:text-white ">
                                             <span>{{ $role->created_at->format('Y-m-d H:i:s') }}</span>
                                         </td>
 
@@ -104,7 +104,7 @@
                                                                     </div> --}}
 
                                                 <a href="{{ route('admin.roles.edit', $role->id) }}"
-                                                    class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                                    class="w-4 mr-2 transform dark:text-white  hover:text-purple-500 hover:scale-110">
                                                     <div>
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                             viewBox="0 0 24 24" stroke="currentColor">
@@ -124,7 +124,7 @@
                                                     @method('DELETE')
                                                     <button type="submit">
                                                         <div
-                                                            class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                                            class=" dark:text-white w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                 <path stroke-linecap="round" stroke-linejoin="round"

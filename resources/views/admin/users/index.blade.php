@@ -14,7 +14,7 @@
                     <div class="flex flex-row mb-1 sm:mb-0">
                         <div class="relative">
                             <select
-                                class="appearance-none h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                class=" h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                 <option>5</option>
                                 <option>10</option>
                                 <option>20</option>
@@ -23,7 +23,7 @@
                         </div>
                         <div class="relative">
                             <select
-                                class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
+                                class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block  w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
                                 <option>All</option>
                                 <option>Active</option>
                                 <option>Inactive</option>
@@ -77,9 +77,9 @@
                                 <tbody class="text-gray-600 text-sm font-light">
 
                                     @foreach ($users as $user)
-                                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                        <tr class="border-b border-gray-200 hover:bg-gray-400">
 
-                                            <td class="py-3 px-6 text-left capitalize">
+                                            <td class="py-3 px-6 text-left capitalize dark:text-white">
                                                 <div class="flex items-center">
                                                     <div class="mr-2">
                                                         <img class="w-6 h-6 rounded-full"
@@ -89,12 +89,12 @@
                                                 </div>
                                             </td>
 
-                                            <td class="py-3 px-6 text-left">
+                                            <td class="py-3 px-6 text-left ">
 
                                                 @foreach ($user->roles as $role)
                                                     @if ($loop->iteration <= 3)
                                                         <span
-                                                            class="bg-purple-200 text-purple-600 py-1 px-3 rounded-sm text-xs">{{ $role['name'] }}</span>
+                                                            class="bg-purple-200 text-purple-600 dark:text-white py-1 px-3 rounded-sm text-xs">{{ $role['name'] }}</span>
                                                     @else
                                                         ...
                                                     @break
@@ -102,10 +102,10 @@
                                             @endforeach
 
                                         </td>
-                                        <td class="py-3 px-6 text-center">
+                                        <td class="py-3 px-6 text-center dark:text-white">
                                             <span>{{ $user->email }}</span>
                                         </td>
-                                        <td class="py-3 px-6 text-center">
+                                        <td class="py-3 dark:text-white px-6 text-center">
                                             <span
                                                 class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">Active</span>
                                         </td>
@@ -119,7 +119,7 @@
                                                                     </div> --}}
 
                                                 <a href="{{ route('admin.users.show', $user->id) }}"
-                                                    class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                                    class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110">
                                                     <div>
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                             viewBox="0 0 24 24" stroke="currentColor">
@@ -139,7 +139,7 @@
                                                     @method('DELETE')
                                                     <button type="submit">
                                                         <div
-                                                            class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                                            class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                 <path stroke-linecap="round" stroke-linejoin="round"

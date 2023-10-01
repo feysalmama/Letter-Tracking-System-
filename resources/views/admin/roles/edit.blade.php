@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2">
 
 
-                <div class="flex flex-col  bg-slate-100">
+                <div class="flex flex-col  bg-slate-50">
                     <div class="space-y-8 divide-y divide-gray-200 w-1/2 m-4 py-2">
                         <form method="POST" action="{{ route('admin.roles.update', $role->id) }}">
                             @csrf
@@ -34,7 +34,7 @@
                     </div>
                 </div>
 
-                <div class="mt-6 p-2 bg-slate-100">
+                <div class="mt-6 p-2 bg-slate-50">
                     <h2 class="text-2xl font-semibold">Role's Permissions</h2>
                     <div class="flex space-x-2 mt-4 p-2">
                         @if ($role->permissions)
