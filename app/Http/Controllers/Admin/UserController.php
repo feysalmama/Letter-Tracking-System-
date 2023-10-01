@@ -42,11 +42,9 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',   
             'phone' => 'required',
             'birth_date'=>'required',
-            'password' => 'required|min:8',
-            'password' => 'required|min:8',
+            'password' => 'required|min:8|confirmed',
         ]);
     
-       
         $validated['password'] = Hash::make($validated['password']);
     
         User::create($validated);
