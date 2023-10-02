@@ -21,7 +21,6 @@ use App\Http\Controllers\Admin\PermissionController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/api/date', [DateController::class, 'fetchDate']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -51,6 +50,8 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     Route::resource('/users',UserController::class);
 
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+    // Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    // Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
    
     Route::post('/users/{user}/roles', [UserController::class, 'assignRole'])->name('users.roles');

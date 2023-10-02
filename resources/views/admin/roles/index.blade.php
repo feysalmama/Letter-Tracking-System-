@@ -138,7 +138,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{ $roles->links() }}
+                        {{-- {{ $roles->links() }} --}}
                     </div>
                 </div>
             </div>

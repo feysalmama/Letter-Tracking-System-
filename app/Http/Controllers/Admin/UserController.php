@@ -60,6 +60,32 @@ class UserController extends Controller
 
         return view('admin.users.role', compact('user', 'roles', 'permissions'));
     }
+    public function edit(User $user)
+    {
+        return view('admin.users.edit', compact('user'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'middle_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id, // Exclude current user's email from uniqueness check
+            'phone' => 'required',
+            'birth_date' => 'required',
+            // 'password' => 'nullable|min:8|confirmed', // Allow password to be nullable
+        ]);
+
+        // Update user attributes
+        $user->update($validated);
+
+        // if ($validated['password']) {
+        //     $user->update(['password' => Hash::make($validated['password'])]);
+        // }
+
+        return redirect()->route('admin.users.index')->with('message', 'User updated.');
+    }
 
     public function assignRole(Request $request, User $user)
     {
