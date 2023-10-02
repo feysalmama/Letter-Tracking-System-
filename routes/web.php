@@ -44,7 +44,8 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     Route::delete('/permissions/{permission}/roles/{role}', [PermissionController::class, 'removeRole'])->name('permissions.roles.remove');
     Route::resource('/users',UserController::class);
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
-    
+    // Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    // Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
    
     Route::post('/users/{user}/roles', [UserController::class, 'assignRole'])->name('users.roles');

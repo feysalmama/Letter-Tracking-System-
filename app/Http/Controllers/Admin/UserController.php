@@ -75,31 +75,22 @@ public function store(Request $request)
 
 public function edit(Request $request, User $user)
     {
-    $users = User::all(); // Fetch all users
 
-    $clickedUserId = $user->id;
 
-    $users->each(function ($item) use ($clickedUserId) {
-        if ($item->id == $clickedUserId) {
-            $item->profile_image_path = $item->image
-                ? asset('user/' . $item->image)
-                : asset('user/default.jpg');
-        }
-    });
-
-            return view('admin.users.edit', compact("users","clickedUserId"));
+            return view('admin.users.edit', compact("user"));
     }
 
 
 public function update(Request $request, User $user)
 {
     $validated = $request->validate([
-        'first_name' => 'required',
-        'middle_name' => 'required',
-        'last_name' => 'required',
-        'email' => 'required|email|unique:users,email',
-        'phone' => 'required',
-        'birth_date' => 'required',
+        'first_name' => 'string|max:255',
+        'middle_name' => 'string|max:255',
+        'last_name' => 'string|max:255',
+        'email' => 'string|email|unique:users,email,' . $user->id,
+        'birth_date' => 'date|nullable',
+        'phone' => 'string|max:20|nullable',
+        'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048|nullable',
     ]);
 
     $user->update($validated);
@@ -119,9 +110,8 @@ public function update(Request $request, User $user)
         $user->save();
     }
 
-    $users = User::all();
-     $user->refresh(); // Retrieve the updated user record
-    return view('admin.users.index', compact('users'));
+    
+    return redirect()->route('admin.users.index')->with('message', 'User updated.');
 }
 public function permission(User $user,Request $request)
 {
