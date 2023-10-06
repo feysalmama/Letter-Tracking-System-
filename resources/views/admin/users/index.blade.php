@@ -81,9 +81,10 @@
 
                                             <td class="py-3 px-6 text-left capitalize dark:text-white">
                                                 <div class="flex items-center">
-                                                    <div class="mr-2">
-                                                        <img class="w-6 h-6 rounded-full"
-                                                            src="https://randomuser.me/api/portraits/men/1.jpg" />
+                                                    <div class="flex items-center space-x-4">
+                                                        <img class="w-10 h-10 rounded-full"
+                                                            src="{{ asset('user/' . $user->image) }}"
+                                                            alt="Profile Image">
                                                     </div>
                                                     <span>{{ $user->first_name . ' ' . $user->last_name }}</span>
                                                 </div>
@@ -111,22 +112,54 @@
                                         </td>
                                         <td class="py-3 px-6 text-center">
                                             <div class="flex item-center justify-center">
-                                                {{-- <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                                        </svg>
-                                                                    </div> --}}
+
 
                                                 <a href="{{ route('admin.users.show', $user->id) }}"
-                                                    class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110">
-                                                    <div>
+                                                    class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110 group">
+                                                    <div class="relative">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                            viewBox="0 0 24 24" strokeWidth={2}
+                                                            stroke="currentColor" className="w-8 h-8">
+                                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                                d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                                                         </svg>
+
+
+                                                        <span
+                                                            class="absolute left-1/2 transform -translate-x-1/2 bg-black text-white px-2 py-1 rounded opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
+                                                            Role
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                                <a href="{{ route('admin.users.permission', $user->id) }}"
+                                                    class=" w-5 h-5 transform dark:text-white hover:text-purple-500 hover:scale-110 group">
+                                                    <div class="relative">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="w-4 h-4">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                                                        </svg>
+                                                        <span
+                                                            class="absolute  left-1/2 transform -translate-x-1/2 bg-black text-white px-2 py-1 rounded opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
+                                                            Permission
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                                <a href="{{ route('admin.users.edit', $user->id) }}"
+                                                    class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110 group">
+                                                    <div class="relative">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="w-4 h-4">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                                        </svg>
+
+                                                        <span
+                                                            class="absolute left-1/2 transform -translate-x-1/2 bg-black text-white px-2 py-1 rounded opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
+                                                            Edit
+                                                        </span>
                                                     </div>
                                                 </a>
 
@@ -139,13 +172,17 @@
                                                     @method('DELETE')
                                                     <button type="submit">
                                                         <div
-                                                            class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110">
+                                                            class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110 group">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                 viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    stroke-width="2"
+                                                                <path stroke-linecap="round"
+                                                                    stroke-linejoin="round" stroke-width="2"
                                                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                             </svg>
+                                                            <span
+                                                                class="absolute left-1/2 transform -translate-x-1/2 bg-black text-white px-2 py-1 rounded opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
+                                                                Delete
+                                                            </span>
                                                         </div>
                                                     </button>
                                                 </form>
@@ -159,7 +196,6 @@
                             </tbody>
                         </table>
                     </div>
-                    {{ $users->links() }}
                 </div>
             </div>
 

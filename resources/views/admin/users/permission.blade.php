@@ -1,14 +1,14 @@
 <x-app-layout>
+
     <x-slot name="header">
         <h2 class="font-semibold text-sm text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Update User') }}
+            {{ __('Users') }}
         </h2>
     </x-slot>
     <div class="py-2 w-full  ">
         <div class="max-w-5xl  sm:px-6 lg:px-8 ">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2 py-12">
                 <div class=" my-8 mx-20">
-
                     @foreach ($users as $user)
                         @if ($user->id == $clickedUserId)
                             <div class="flex items-center">
@@ -21,55 +21,47 @@
                         @endif
                     @endforeach
 
-
-
-
-
                     <div class="mt-6 p-2 bg-slate-100 ">
-                        <h2 class="text-2xl font-semibold">Roles</h2>
+                        <h2 class="text-2xl font-semibold">Permissions</h2>
                         <div class="flex space-x-2 mt-4 p-2">
-                            @if ($user->roles)
-                                @foreach ($user->roles as $user_role)
+                            @if ($user->permissions)
+                                @foreach ($user->permissions as $user_permission)
                                     <form class="px-4 py-2 bg-yellow-500 hover:bg-yellow-700 text-white rounded-md"
                                         method="POST"
-                                        action="{{ route('admin.users.roles.remove', [$user->id, $user_role->id]) }}"
+                                        action="{{ route('admin.users.permissions.revoke', [$user->id, $user_permission->id]) }}"
                                         onsubmit="return confirm('Are you sure?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"> {{ $user_role->name }} </button>
-
+                                        <button type="submit">{{ $user_permission->name }}</button>
                                     </form>
                                 @endforeach
                             @endif
                         </div>
                         <div class="max-w-xl mt-6">
-                            <form method="POST" action="{{ route('admin.users.roles', $user->id) }}">
+                            <form method="POST" action="{{ route('admin.users.permissions', $user->id) }}">
                                 @csrf
                                 <div class="sm:col-span-6">
-                                    <label for="role" class="block text-sm font-medium text-gray-700">Roles</label>
-                                    <select id="role" name="role" autocomplete="role-name"
+                                    <label for="permission"
+                                        class="block text-sm font-medium text-gray-700">Permission</label>
+                                    <select id="permission" name="permission" autocomplete="permission-name"
                                         class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        @foreach ($roles as $role)
-                                            <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                        @foreach ($permissions as $permission)
+                                            <option value="{{ $permission->name }}">{{ $permission->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                @error('role')
+                                @error('name')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
                         </div>
-                        <div class="flex justify-end sm:col-span-6 pt-5">
+                        <div class="flex  sm:col-span-6 p-5">
                             <button type="submit"
                                 class="px-4 py-1 bg-purple-500 hover:bg-purple-700 rounded-md">Assign</button>
                         </div>
                         </form>
+
                     </div>
-
-
                 </div>
             </div>
-
         </div>
-    </div>
-
 </x-app-layout>
