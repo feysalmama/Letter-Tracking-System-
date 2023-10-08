@@ -11,9 +11,9 @@
             <div class="flex flex-col">
                 <div class="space-y-8 divide-y divide-gray-200 w-full mt-10">
 
-                    <form method="POST" action="{{ route('admin.users.store') }}">
+                    <form method="POST" action="{{ route('admin.users.store') }}" enctype="multipart/form-data">
                         @csrf
-                        <div class="grid gap-6 mb-6 md:grid-cols-2">
+                        <div class="grid gap-6 mb-6 md:grid-cols-2 shadow-lg p-6">
                             <div>
                                 <label for="first_name"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First
@@ -93,6 +93,11 @@
                                 <input type="password" id="confirm_password" name="confirm_password"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="•••••••••" required>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Profile
+                                    Picture</label>
+                                <input type="file" id="image" name="image" required>
                             </div>
                         </div>
                         <button type="submit"

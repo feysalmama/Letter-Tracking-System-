@@ -7,16 +7,17 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
-       
+
 
         $query = $request->input('query');
-     
+
        $query = htmlspecialchars(strip_tags($query));
 
        $users = User::where(function($q) use ($query) {
@@ -25,6 +26,12 @@ class UserController extends Controller
              ->orWhere('last_name', 'like', "%$query%");
        }) ->orderBy('created_at', 'desc')->paginate(5);
 
+          // Set the profile_image_path attribute for each user
+    $users->each(function ($user) {
+        $user->profile_image_path = $user->image
+            ? asset('user/' . $user->image)
+            : asset('user/default.jpg');
+    });
         return view('admin.users.index', compact('users'));
     }
     public function create()
@@ -32,60 +39,129 @@ class UserController extends Controller
         return view('admin.users.create');
     }
 
-    public function store(Request $request)
-    {
-        
-        $validated = $request->validate([
-            'first_name' => 'required',
-            'middle_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email|unique:users,email',   
-            'phone' => 'required',
-            'birth_date'=>'required',
-            'password' => 'required|min:8|confirmed',
-        ]);
-    
-        $validated['password'] = Hash::make($validated['password']);
-    
-        User::create($validated);
-    
-        return redirect()->route('admin.users.index')->with('message', 'User created.');
-    }
-    
 
-    public function show(User $user)
-    {
-        $roles = Role::all();
-        $permissions = Permission::all();
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'first_name' => 'required',
+        'middle_name' => 'required',
+        'last_name' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'phone' => 'required',
+        'birth_date' => 'required',
+        'password' => 'required|min:8',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        return view('admin.users.role', compact('user', 'roles', 'permissions'));
-    }
-    public function edit(User $user)
-    {
-        return view('admin.users.edit', compact('user'));
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move("user", $imageName);
+
+        // Add the image filename or path to the validated data
+        $validated['image'] = $imageName;
     }
 
-    public function update(Request $request, User $user)
+    // Hash the password
+    $validated['password'] = Hash::make($validated['password']);
+
+    // Save the user using the validated data
+    User::create($validated);
+
+    return redirect()->route('admin.users.index')->with('message', 'User created.');
+}
+
+
+
+public function edit(Request $request, User $user)
     {
-        $validated = $request->validate([
-            'first_name' => 'required',
-            'middle_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id, // Exclude current user's email from uniqueness check
-            'phone' => 'required',
-            'birth_date' => 'required',
-            // 'password' => 'nullable|min:8|confirmed', // Allow password to be nullable
-        ]);
+    $users = User::all(); // Fetch all users
 
-        // Update user attributes
-        $user->update($validated);
+    $clickedUserId = $user->id;
 
-        // if ($validated['password']) {
-        //     $user->update(['password' => Hash::make($validated['password'])]);
-        // }
+    $users->each(function ($item) use ($clickedUserId) {
+        if ($item->id == $clickedUserId) {
+            $item->profile_image_path = $item->image
+                ? asset('user/' . $item->image)
+                : asset('user/default.jpg');
+        }
+    });
 
-        return redirect()->route('admin.users.index')->with('message', 'User updated.');
+            return view('admin.users.edit', compact("users","clickedUserId"));
     }
+
+
+public function update(Request $request, User $user)
+{
+    $validated = $request->validate([
+        'first_name' => 'required',
+        'middle_name' => 'required',
+        'last_name' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'phone' => 'required',
+        'birth_date' => 'required',
+    ]);
+
+    $user->update($validated);
+
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move("user", $imageName);
+
+
+
+        if ($user->image) {
+            Storage::disk('public')->delete($user->image);
+        }
+
+        $user->image = $imageName;
+        $user->save();
+    }
+
+    $users = User::all();
+     $user->refresh(); // Retrieve the updated user record
+    return view('admin.users.index', compact('users'));
+}
+public function permission(User $user,Request $request)
+{
+    $roles = Role::all();
+    $permissions = Permission::all();
+
+    $users = User::all(); // Fetch all users
+
+    $clickedUserId = $user->id;
+
+    $users->each(function ($item) use ($clickedUserId) {
+        if ($item->id == $clickedUserId) {
+            $item->profile_image_path = $item->image
+                ? asset('user/' . $item->image)
+                : asset('user/default.jpg');
+        }
+    });
+
+    return view('admin.users.permission', compact('users', 'roles', 'permissions', "clickedUserId"));
+}
+public function show(User $user, Request $request)
+{
+    $roles = Role::all();
+    // $permissions = Permission::all();
+
+    $users = User::all(); // Fetch all users
+
+    $clickedUserId = $user->id;
+
+    $users->each(function ($item) use ($clickedUserId) {
+        if ($item->id == $clickedUserId) {
+            $item->profile_image_path = $item->image
+                ? asset('user/' . $item->image)
+                : asset('user/default.jpg');
+        }
+    });
+
+    return view('admin.users.role', compact('users',"roles",'clickedUserId'));
+}
+
 
     public function assignRole(Request $request, User $user)
     {
