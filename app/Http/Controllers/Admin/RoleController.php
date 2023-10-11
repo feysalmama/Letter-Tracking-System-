@@ -12,8 +12,8 @@ class RoleController extends Controller
 {
      public function index(Request $request)
     {
-        // $roles = Role::orderBy('created_at', 'desc')->paginate(5);
-        $roles = Role::paginate(5);
+        $roles = Role::orderBy('created_at', 'desc')->paginate(5);
+        // $roles = Role::paginate(5);
         
         $permissions = Permission::all();
          $user = Auth::user();

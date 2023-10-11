@@ -8,15 +8,15 @@
         <div class="max-w-5xl  sm:px-6 lg:px-8 ">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2 py-12">
                 <div class=" my-8 mx-20">
-                    @foreach ($users as $user)
-                        @if ($user->id == $clickedUserId)
-                            <div class="flex items-center">
+                    {{-- @foreach ($users as $user) --}}
+                        {{-- @if ($user->id == $clickedUserId) --}}
+                            {{-- <div class="flex items-center">
                                 <div class="flex items-center space-x-4">
-                                    <img class="w-10 h-10 rounded-full" src="{{ $user->profile_image_path }}"
+                                    <img class="w-10 h-10 rounded-full" src=""
                                         alt="Profile Image">
                                 </div>
                                 <div class="text-sm text-gray-500 dark:text-gray-400">{{ $user->email }}</div>
-                            </div>
+                            </div> --}}
                             <div class="py-2 w-full ">
                                 <div class=" mx-auto sm:px-6 lg:px-8">
                                     <div class="flex flex-col">
@@ -121,8 +121,10 @@
                                                         <label
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Profile
                                                             Picture</label>
-                                                        <input type="file" id="image" name="image" required>
+                                                        <input type="file" id="image" name="image"   > 
                                                     </div>
+
+                                                    
                                                 </div>
 
 
@@ -137,8 +139,8 @@
 
                             </div>
                 </div>
-                @endif
-                @endforeach
+                {{-- @endif
+                @endforeach --}}
 
 
             </div>

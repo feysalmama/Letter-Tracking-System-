@@ -95,12 +95,13 @@ public function update(Request $request, User $user)
 {
     $permissions = Permission::all();
     $validated = $request->validate([
-        'first_name' => 'required',
-        'middle_name' => 'required',
-        'last_name' => 'required',
-        'email' => 'required|email|unique:users,email',
-        'phone' => 'required',
-        'birth_date' => 'required',
+        'first_name' => 'string|max:255',
+        'middle_name' => 'string|max:255',
+        'last_name' => 'string|max:255',
+        'email' => 'string|email|unique:users,email,' . $user->id,
+        'birth_date' => 'date|nullable',
+        'phone' => 'string|max:20|nullable',
+        'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048|nullable',
     ]);
 
     $user->update($validated);
