@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Letter\NodeController;
 use App\Http\Controllers\Letter\RouteController;
+use App\Http\Controllers\Letter\LetterController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Letter\LetterTypeController;
 
@@ -66,10 +67,14 @@ Route::middleware(['auth', 'role:admin'])->name('letter.')->prefix('letter')->gr
 
     
     // Letter and letter_Route Routes
+    Route::resource('letter', LetterController::class);
     Route::resource('letter-types', LetterTypeController::class);
     Route::resource('predefined-routes', RouteController::class);
     Route::resource('nodes', NodeController::class);
-  
+    
+     // Route for printing the letter information
+     Route::get('/letters/{letter}/print', [ LetterController::class,'printLetter' ])->name('letter.print');
+
 
 });
 
