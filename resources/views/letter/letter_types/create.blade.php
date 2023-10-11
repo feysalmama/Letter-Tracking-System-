@@ -11,7 +11,7 @@
             <div class="flex flex-col">
                 <div class="space-y-8 divide-y divide-gray-200 w-full mt-10">
 
-                    <form method="POST" action="{{ route('admin.letter-types.store') }}" >
+                    <form method="POST" action="{{ route('letter.letter-types.store') }}" >
                         @csrf
                         <div class="grid gap-6 mb-6 md:grid-cols-2 shadow-lg p-6">
                             <div>

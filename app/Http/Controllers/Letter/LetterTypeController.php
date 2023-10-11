@@ -46,7 +46,7 @@ class LetterTypeController extends Controller
         // Create a new letter type using mass assignment
         LetterType::create($validated);
 
-        return redirect()->route('admin.letter-types.index')
+        return redirect()->route('letter.letter-types.index')
             ->with('success', 'Letter type created successfully.');
     }
 
@@ -90,7 +90,7 @@ class LetterTypeController extends Controller
         // Update the letter type using mass assignment
         $letterType->update($validated);
 
-        return redirect()->route('admin.letter-types.index')
+        return redirect()->route('letter.letter-types.index')
             ->with('success', 'Letter type updated successfully.');
     }
 
@@ -113,7 +113,7 @@ class LetterTypeController extends Controller
         // If there are no associated letters, delete the letter type
         $letterType->delete();
 
-        return redirect()->route('admin.letter-types.index')
+        return redirect()->route('letter.letter-types.index')
             ->with('success', 'Letter type deleted successfully.');
     }
 }

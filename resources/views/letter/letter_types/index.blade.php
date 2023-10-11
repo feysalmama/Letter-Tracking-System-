@@ -31,7 +31,7 @@
 
                         </div>
                     </div>
-                    <form method="GET" action="{{ route('admin.letter-types.index') }}" class="block relative">
+                    <form method="GET" action="{{ route('letter.letter-types.index') }}" class="block relative">
                         <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
                             <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
                                 <path
@@ -53,7 +53,7 @@
 
 
                 <div>
-                    <a href="{{ route('admin.letter-types.create') }}"
+                    <a href="{{ route('letter.letter-types.create') }}"
                         class="flex items-center justify-center px-3 py-2 space-x-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50">
                         + Add Letter Types
                     </a>
@@ -97,7 +97,7 @@
                                               
                                               
                                          
-                                                <a href="{{ route('admin.letter-types.edit', $letter->id) }}"
+                                                <a href="{{ route('letter.letter-types.edit', $letter->id) }}"
                                                     class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110">
                                                     <div>
 
@@ -118,7 +118,7 @@
 
 
                                                 <form method="POST"
-                                                    action="{{ route('admin.letter-types.destroy', $letter->id) }}"
+                                                    action="{{ route('letter.letter-types.destroy', $letter->id) }}"
                                                     onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('DELETE')

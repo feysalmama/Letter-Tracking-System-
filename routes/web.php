@@ -57,7 +57,14 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     Route::post('/users/{user}/permission/permissions', [UserController::class, 'givePermission'])->name('users.permissions');
     Route::delete('/users/{user}/permission/permissions/{permission}', [UserController::class, 'revokePermission'])->name('users.permissions.revoke');
 
+  
 
+});
+
+
+Route::middleware(['auth', 'role:admin'])->name('letter.')->prefix('letter')->group(function () {
+
+    
     // Letter and letter_Route Routes
     Route::resource('letter-types', LetterTypeController::class);
     Route::resource('predefined-routes', RouteController::class);

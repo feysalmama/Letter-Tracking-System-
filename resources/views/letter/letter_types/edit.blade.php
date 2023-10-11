@@ -13,7 +13,7 @@
                                 <div class=" mx-auto sm:px-6 lg:px-8">
                                     <div class="flex flex-col">
                                         <div class="space-y-8 divide-y divide-gray-200 w-full mt-10">
-                                            <form action="{{ route('admin.letter-types.update', $letterType->id) }}" method="POST"
+                                            <form action="{{ route('letter.letter-types.update', $letterType->id) }}" method="POST"
                                                >
                                                 @csrf
                                                 @method('PUT')
