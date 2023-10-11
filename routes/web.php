@@ -5,7 +5,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\IndexController;
+use App\Http\Controllers\Letter\NodeController;
+use App\Http\Controllers\Letter\RouteController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Letter\LetterTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +56,13 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
    
     Route::post('/users/{user}/permission/permissions', [UserController::class, 'givePermission'])->name('users.permissions');
     Route::delete('/users/{user}/permission/permissions/{permission}', [UserController::class, 'revokePermission'])->name('users.permissions.revoke');
+
+
+    // Letter and letter_Route Routes
+    Route::resource('letter-types', LetterTypeController::class);
+    Route::resource('predefined-routes', RouteController::class);
+    Route::resource('nodes', NodeController::class);
+  
 
 });
 
