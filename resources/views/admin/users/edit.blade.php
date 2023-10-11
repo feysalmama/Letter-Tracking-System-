@@ -101,7 +101,21 @@
                                                             <span class="text-red-400 text-sm">{{ $message }}</span>
                                                         @enderror
                                                     </div>
+                                                    <div class="mb-6">
+                                                        <label for="department_id"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
+                                                            Department
+                                                        </label>
 
+                                                        <select id="department_id" name="department_id"
+                                                            autocomplete="department-name"
+                                                            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                            @foreach ($departments as $department)
+                                                                <option value="{{ $department->id }}">
+                                                                    {{ $department->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
 
                                                     <div class="mb-6">
                                                         <label

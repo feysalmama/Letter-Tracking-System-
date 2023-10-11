@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Department;
 use Laravel\Sanctum\HasApiTokens;
-// use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Permission\Traits\HasPermissions;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -28,8 +28,15 @@ class User extends Authenticatable
         'password',
         'birth_date',
         'phone',
-        'image'
+        'image',
+        'department_id'
     ];
+
+public function departments()
+{
+    return $this->belongsToMany(Department::class, 'department_id','id');
+}
+
 
     /**
      * The attributes that should be hidden for serialization.

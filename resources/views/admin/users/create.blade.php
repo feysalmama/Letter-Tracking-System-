@@ -94,6 +94,25 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="•••••••••" required>
                             </div>
+
+
+                            <div class="mb-6">
+                                <label for="department_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
+                                    Department
+                                </label>
+
+                                <select id="department_id" name="department_id" autocomplete="department-name"
+                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    @foreach ($departments as $department)
+                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+
+
+
                             <div class="mb-6">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Profile
                                     Picture</label>
