@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Route;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LetterType extends Model
 {
@@ -15,4 +16,10 @@ class LetterType extends Model
         'description',
       
     ];
+
+    public function routes()
+{
+    return $this->hasMany(Route::class);
+}
+
 }
