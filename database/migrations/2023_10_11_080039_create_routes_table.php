@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('name'); // e.g., "Route A"
             $table->integer('estimated_waiting_time'); // in minutes
             $table->string('office_name'); // Name of the office or point of interaction
-            $table->boolean('in_or_out_office'); // 1 for "In" and 0 for "Out"
-            $table->string('zone'); // Zone or city administration
-            $table->string('woreda'); // Woreda (if applicable)
+            $table->boolean('in_or_out_office')->default('0'); // 1 for "In" and 0 for "Out"
+            $table->string('zone')->nullable(); // Zone or city administration
+            $table->string('woreda')->nullable(); // Woreda (if applicable)
             $table->unsignedBigInteger('letter_type_id'); // Foreign key to link with LetterType
             $table->timestamps();
         });
