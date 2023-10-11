@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name'); // Name of the node or office
             $table->string('office_name'); // Office name
-            $table->boolean('in_or_out_office'); // 1 for "In" and 0 for "Out"
+            $table->boolean('in_or_out_office')->default('0'); // 1 for "In" and 0 for "Out"
             $table->string('zone'); // Zone or city administration
             $table->string('woreda'); // Woreda (if applicable)
             $table->unsignedBigInteger('route_id'); // Foreign key to link with Route
