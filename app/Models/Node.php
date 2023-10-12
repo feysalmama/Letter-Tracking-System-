@@ -15,12 +15,30 @@ class Node extends Model
         'in_or_out_office', // 1 for "In" and 0 for "Out"
         'zone',           // Zone or city administration
         'woreda',         // Woreda (if applicable)
-        'route_id',       // Foreign key to link with Route
     ];
 
-    public function route()
-{
-    return $this->belongsTo(Route::class);
-}
+
+
+    public function routes()
+    {
+        return $this->belongsToMany(Route::class)
+            ->withPivot('order'); // Include the order field from the pivot table
+    }
+
+
+
+    // Function to calculate the next available order for a new node in a route
+    function calculateNextNodeOrder($route)
+    {
+        if ($route) {
+            $highestOrder = $route->nodes()->max('order');
+            if ($highestOrder === null) {
+                return 1; // No existing orders, set a default value
+            }
+            return $highestOrder + 1;
+        }
+        return 1; // Default to 1 if the route is not found
+    }
+    
 
 }

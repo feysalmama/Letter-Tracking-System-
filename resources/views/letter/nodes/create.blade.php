@@ -77,7 +77,7 @@
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div>
+                            {{-- <div>
                                 <label for="route_id"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Route Type</label>                                   
                                     <select name="route_id" id="route_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -88,7 +88,21 @@
                                 @error('route_id')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
+                            </div> --}}
+
+                            <div>
+                                <label for="route_ids" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Route Types</label>
+                                <select name="route_ids[]" id="route_ids" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple>
+                                    @foreach ($routes as $key => $route)
+                                        <option value="{{ $route->id }}" @if ($key === 0) selected @endif>{{ $route->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('route_ids')
+                                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
+                            
+                            
 
                      
                         </div>

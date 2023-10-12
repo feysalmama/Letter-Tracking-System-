@@ -39,22 +39,29 @@ class NodeController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming request data
-        $validated = $request->validate([
+     
+    $validated = $request->validate([
             'name' => 'required|string',
             'office_name' => 'required|string',
             'in_or_out_office' => 'boolean|nullable',
             'zone' => 'string|nullable',
             'woreda' => 'string|nullable',
-            'route_id' => 'required|exists:routes,id',
+            'route_ids' => 'array|exists:routes,id',
+            
         ]);
 
-        // Create a new route using the validated data
-        Node::create($validated);
+    // Create the node
+    $node = Node::create($validated);
 
-        // Redirect to a view or route, e.g., back to the index view
-        return redirect()->route('letter.nodes.index')->with('success', 'Node created successfully.');
-    
+    // Attach the selected routes with calculated order
+    foreach ($validated['route_ids'] as $routeId) {
+        $order = $node->calculateNextNodeOrder(Route::find($routeId));
+        $node->routes()->attach($routeId, ['order' => $order]);
+    }
+
+    // Redirect to a view or route, e.g., back to the index view
+    return redirect()->route('letter.nodes.index')->with('success', 'Node created successfully.');
+
     }
 
     /**
@@ -89,22 +96,39 @@ class NodeController extends Controller
      */
     public function update(Request $request, Node $node)
     {
-              // Validate the incoming request data
-              $validated = $request->validate([
+            $validated = $request->validate([
                 'name' => 'required|string',
                 'office_name' => 'required|string',
                 'in_or_out_office' => 'boolean|nullable',
                 'zone' => 'required|string',
                 'woreda' => 'required|string',
-                'route_id' => 'required|exists:routes,id',
+                'route_ids' => 'array|exists:routes,id',
             ]);
-    
-            // Create a new route using the validated data
+        
+            // Check if the node has any associated routes
+            if ($node->routes->isEmpty()) {
+                return redirect()->route('letter.nodes.index')->with('error', 'Node update failed. The node does not have any associated routes.');
+            }
+        
+            // Use sync to update the associated routes based on the selected route_ids
+            $node->routes()->sync($validated['route_ids']);
+
+             // Now, update the order of the nodes within each route
+            foreach ($validated['route_ids'] as $routeId) {
+                $route = Route::find($routeId); // Find the route by its ID
+                if ($route) {
+                    $order = $node->calculateNextNodeOrder($route); // Implement your logic to determine the order
+                    $node->routes()->updateExistingPivot($routeId, ['order' => $order]);
+                }
+            }
+
+        
+            // Update all fields in the node model based on the $validated array
             $node->update($validated);
-    
+        
             // Redirect to a view or route, e.g., back to the index view
             return redirect()->route('letter.nodes.index')->with('success', 'Node updated successfully.');
-        
+    
     }
 
     /**

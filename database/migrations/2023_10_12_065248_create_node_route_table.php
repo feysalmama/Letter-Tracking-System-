@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('nodes', function (Blueprint $table) {
+        Schema::create('node_route', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Name of the node or office
-            $table->string('office_name'); // Office name
-            $table->boolean('in_or_out_office')->default('0'); // 1 for "In" and 0 for "Out"
-            $table->string('zone'); // Zone or city administration
-            $table->string('woreda'); // Woreda (if applicable)
+            $table->unsignedBigInteger('node_id');
+            $table->unsignedBigInteger('route_id');
+            $table->integer('order')->default(1); // Order of the node in the route
             $table->timestamps();
+            
+            $table->foreign('node_id')->references('id')->on('nodes');
+            $table->foreign('route_id')->references('id')->on('routes');
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nodes');
+        Schema::dropIfExists('node_route');
     }
 };

@@ -19,10 +19,13 @@ class Route extends Model
         'letter_type_id',        // Foreign key to link with LetterType
     ];
 
+
     public function nodes()
-{
-    return $this->hasMany(Node::class);
-}
+    {
+        return $this->belongsToMany(Node::class)
+            ->withPivot('order') // Include the order field from the pivot table
+            ->orderBy('order');  // Order nodes by their position in the route
+    }
 
     
 }
