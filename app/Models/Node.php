@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Route;
+use App\Models\LetterMovement;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -24,6 +25,12 @@ class Node extends Model
         return $this->belongsToMany(Route::class)
             ->withPivot('order'); // Include the order field from the pivot table
     }
+
+    public function movements()
+    {
+        return $this->hasMany(LetterMovement::class);
+    }
+
 
 
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\Letter\RouteController;
 use App\Http\Controllers\Letter\LetterController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Letter\LetterTypeController;
+use App\Http\Controllers\Letter\LetterMovementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +75,16 @@ Route::middleware(['auth', 'role:admin'])->name('letter.')->prefix('letter')->gr
     
      // Route for printing the letter information
      Route::get('/letters/{letter}/print', [ LetterController::class,'printLetter' ])->name('letter.print');
+    
+     // Route for letter movement /letter-movements
+     Route::resource('letter-movements', LetterMovementController::class);
+
+     // for other standard actions
+     Route::resource('letter-movements', LetterMovementController::class)->except(['create', 'edit']);
+     // Define a custom route for recording letter movements
+     Route::get('letter-movements/{letter}/record-movement', [ LetterMovementController::class,'createMovement'])->name('letter-movements.add');
+     Route::post('letter-movements/{letter}/{destinationNode}', [ LetterMovementController::class,'recordMovement'])->name('letter-movements.record');
+
 
 
 });

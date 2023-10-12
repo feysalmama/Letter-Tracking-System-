@@ -81,8 +81,19 @@ class LetterController extends Controller
 
         // Combine the validated data and additional data
         $letterData = array_merge($validated, $additionalData);
-        // Create a new letter using the validated data and user ID
-        Letter::create($letterData);
+        
+        $letter =Letter::create($letterData);
+
+         // Record the initial movement (finding initial node in the route)
+        $initialNode = $letter->getInitialNode();
+
+        if ($initialNode) {
+            // Record the initial movement
+            $letter->movements()->create([
+                'node_id' => $initialNode->id,
+                'movement_date' => now(),
+            ]);
+        }
 
         // Redirect to a view or route, 
         return redirect()->route('letter.letter.index')->with('success', 'Letter created successfully.');
