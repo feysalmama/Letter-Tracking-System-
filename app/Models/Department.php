@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Department extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'description','user_id'];
+    protected $fillable = ['name', 'description'];
 
 
      // Define relationships if needed

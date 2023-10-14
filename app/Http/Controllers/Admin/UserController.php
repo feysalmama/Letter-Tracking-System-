@@ -16,7 +16,7 @@ class UserController extends Controller
 public function index(Request $request)
 {
 
-
+      $departments = Department::all();
         $query = $request->input('query');
 
        $query = htmlspecialchars(strip_tags($query));
@@ -33,7 +33,7 @@ public function index(Request $request)
             ? asset('user/' . $user->image)
             : asset('user/default.jpg');
     });
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', compact('users','departments'));
     }
     public function create()
     {
@@ -102,6 +102,7 @@ public function update(Request $request, User $user)
         'birth_date' => 'date|nullable',
         'phone' => 'string|max:20|nullable',
         'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048|nullable',
+         'department_id' => 'required'
     ]);
 
     $user->update($validated);

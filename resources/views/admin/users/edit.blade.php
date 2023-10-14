@@ -8,8 +8,8 @@
         <div class="max-w-5xl  sm:px-6 lg:px-8 ">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2 py-12">
                 <div class=" my-8 mx-20">
-                    {{-- @foreach ($users as $user) --}}
-                        {{-- @if ($user->id == $clickedUserId) --}}
+                    @foreach ($users as $user)
+                        @if ($user->id == $clickedUserId)
                             {{-- <div class="flex items-center">
                                 <div class="flex items-center space-x-4">
                                     <img class="w-10 h-10 rounded-full" src=""
@@ -111,7 +111,8 @@
                                                             autocomplete="department-name"
                                                             class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                                             @foreach ($departments as $department)
-                                                                <option value="{{ $department->id }}">
+                                                                <option value="{{ $department->id }}"
+                                                                    {{ $user->department_id == $department->id ? 'selected' : '' }}>
                                                                     {{ $department->name }}</option>
                                                             @endforeach
                                                         </select>
@@ -121,10 +122,10 @@
                                                         <label
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Profile
                                                             Picture</label>
-                                                        <input type="file" id="image" name="image"   > 
+                                                        <input type="file" id="image" name="image">
                                                     </div>
 
-                                                    
+
                                                 </div>
 
 
@@ -139,8 +140,8 @@
 
                             </div>
                 </div>
-                {{-- @endif
-                @endforeach --}}
+                @endif
+                @endforeach
 
 
             </div>

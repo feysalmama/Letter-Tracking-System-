@@ -19,12 +19,6 @@ return new class extends Migration
         $table->string('description');
         $table->timestamps();
     });
-
-    // Schema::table('letter_tracking_system_3', function (Blueprint $table) {
-    //     $table->unsignedBigInteger('department_id')->nullable();
-    //     $table->foreign('department_id')->references('id')->on('departments');
-    // });
-
     }
 
     /**
