@@ -67,8 +67,8 @@
                             <table class="min-w-max w-full table-auto">
                                 <thead>
                                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                        <th class="py-3 px-6 text-left">Client</th>
-                                        <th class="py-3 px-6 text-left">Role</th>
+                                        <th class="py-3 px-6 text-left">Letter Type</th>
+                                        <th class="py-3 px-6 text-left">description</th>
                                         <th class="py-3 px-6 text-center">Actions</th>
 
 
@@ -83,10 +83,10 @@
 
 
 
-                                            <td class="py-3 px-6 text-left dark:text-white">
+                                            <td class="py-3 px-6 text-left dark:text-white capitalize">
                                                 <span>{{ $letter->name }}</span>
                                             </td>
-                                            <td class="py-3 dark:text-white px-6 text-left">
+                                            <td class="py-3 dark:text-white px-6 text-left capitalize">
                                                 <span
                                                     class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $letter->description }}</span>
                                             </td>

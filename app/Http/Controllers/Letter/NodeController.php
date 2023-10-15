@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Letter;
 
 use App\Models\Node;
+use App\Models\User;
 use App\Models\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,7 +29,8 @@ class NodeController extends Controller
     public function create()
     {
         $routes = Route::all(); // Fetch all Routes
-        return view('letter.nodes.create', compact('routes'));
+        $users = User::all(); // Fetch all Users
+        return view('letter.nodes.create', compact('users','routes'));
     }
 
     /**
@@ -43,15 +45,17 @@ class NodeController extends Controller
     $validated = $request->validate([
             'name' => 'required|string',
             'office_name' => 'required|string',
-            'in_or_out_office' => 'boolean|nullable',
+            'in_or_out_office' => 'boolean',
             'zone' => 'string|nullable',
             'woreda' => 'string|nullable',
             'route_ids' => 'array|exists:routes,id',
+            'user_id' => 'required|exists:users,id', // Ensure that a user is selected
             
         ]);
 
     // Create the node
     $node = Node::create($validated);
+
 
     // Attach the selected routes with calculated order
     foreach ($validated['route_ids'] as $routeId) {

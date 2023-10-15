@@ -49,8 +49,9 @@ public function store(Request $request)
         'email' => 'required|email|unique:users,email',
         'phone' => 'required',
         'birth_date' => 'required',
-        'password' => 'required|min:8',
+        'password' => 'required|min:8|confirmed', // Add the 'confirmed' rule
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'role' => 'required|in:user,office', // Make sure you include 'role' in the form.
     ]);
 
     if ($request->hasFile('image')) {
@@ -66,7 +67,16 @@ public function store(Request $request)
     $validated['password'] = Hash::make($validated['password']);
 
     // Save the user using the validated data
-    User::create($validated);
+    $user = User::create($validated);
+
+
+    
+    // Assign the role based on the 'role' field
+    if ($validated['role'] === 'office') {
+        $user->assignRole('office'); // Use the correct role name defined in your system.
+    } else {
+        $user->assignRole('user');
+    }
 
     return redirect()->route('admin.users.index')->with('message', 'User created.');
 }

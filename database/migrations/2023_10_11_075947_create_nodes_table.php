@@ -20,7 +20,10 @@ return new class extends Migration
             $table->boolean('in_or_out_office')->default('0'); // 1 for "In" and 0 for "Out"
             $table->string('zone'); // Zone or city administration
             $table->string('woreda'); // Woreda (if applicable)
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

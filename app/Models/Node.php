@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Route;
 use App\Models\LetterMovement;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,7 @@ class Node extends Model
         'in_or_out_office', // 1 for "In" and 0 for "Out"
         'zone',           // Zone or city administration
         'woreda',         // Woreda (if applicable)
+        'user_id'
     ];
 
 
@@ -29,6 +31,11 @@ class Node extends Model
     public function movements()
     {
         return $this->hasMany(LetterMovement::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 

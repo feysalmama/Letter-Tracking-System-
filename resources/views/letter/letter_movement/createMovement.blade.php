@@ -1,4 +1,5 @@
 <x-app-layout class="">
+
 <div class="container mx-auto p-4">
     <h2 class="text-2xl font-bold mb-4">Record Movement for Letter #{{ $letter->id }}</h2>
 
@@ -25,4 +26,6 @@
         </button>
     </form>
 </div>
+
+
 </x-app-layout >

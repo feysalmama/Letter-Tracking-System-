@@ -6,6 +6,7 @@ use App\Models\LetterType;
 use App\Models\LetterMovement;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Route;
 
 class Letter extends Model
 {
@@ -32,60 +33,110 @@ class Letter extends Model
         return $this->hasMany(LetterMovement::class);
     }
 
-    // Function to get the initial node for the letter
-    public function getInitialNode()
+
+    public function route()
     {
-        $letterType = $this->letterType;
+        // Define the relationship with the predefined route
+        return $this->belongsTo(Route::class, 'route_id');
+    }
 
-        if ($letterType) {
-            $predefinedRoute = $letterType->routes->first();
 
-            if ($predefinedRoute) {
-                // Get the first node in the predefined route
-                $initialNode = $predefinedRoute->nodes()->orderBy('order')->first();
 
-                if ($initialNode) {
-                    return $initialNode;
-                }
+
+
+
+    public function getCurrentNode()
+    {
+        // Get the most recent movement for the letter
+        $mostRecentMovement = $this->movements()->latest('created_at')->first();
+
+        // return $mostRecentMovement;
+    
+        if ($mostRecentMovement) {
+            // Retrieve the node ID associated with the most recent movement
+            $currentNodeId = $mostRecentMovement->node_id;
+    
+            // Load the node with the pivot data for 'order'
+            $currentNode = Node::with(['routes' => function ($query) use ($currentNodeId) {
+                $query->where('node_route.node_id', $currentNodeId); // Assuming the pivot table is named 'node_route'
+            }])
+            ->where('id', $currentNodeId)
+            ->first();
+    
+            if ($currentNode) {
+                // Extract the pivot data for 'order'
+                $currentNode->pivot = $currentNode->routes->first()->pivot;
+    
+                return $currentNode;
             }
         }
-
+    
+        // Handle the case where no movements exist for the letter (e.g., the letter is at the initial node).
         return null;
     }
+    
 
-    public function getDestinationNode()
+        public function getDestinationNode()
     {
-        $initialNode = $this->getInitialNode();
-
-        if ($initialNode) {
-            $predefinedRoute = $this->letterType->routes->first();
-
-            // Determine the next node in the route based on the order.
-            $destinationNode = $predefinedRoute->nodes()
-                ->where('order', '>', $initialNode->pivot->order)
-                ->orderBy('order')
-                ->first();
-
-            return $destinationNode;
+        // Get the current node using the getCurrentNode method
+        $currentNode = $this->getCurrentNode();
+        
+        if (!$currentNode) {
+            return null; // Handle the case where the current node is not found.
         }
 
-        return null; // Handle the case where no predefined route is associated with the letter type.
+        // Retrieve the predefined route associated with the letter type
+        $predefinedRoute = $this->letterType->routes->first();
+
+        if (!$predefinedRoute) {
+            return null; // Handle the case where no predefined route is associated with the letter type.
+        }
+
+        // Find the next node in the predefined route based on the order
+        $destinationNode = $predefinedRoute->nodes()
+            ->where('order', '>', $currentNode->pivot->order)
+            ->orderBy('order')
+            ->first();
+
+        if (!$destinationNode) {
+            return $currentNode; // Handle the case where the current node is the last node.
+        }
+        
+        return $destinationNode;
     }
 
-    public function followsNode(Node $destinationNode, Node $initialNode)
+
+    public function followsNode(Node $destinationNode, Node $currentNode)
     {
-        // Check if either $destinationNode or $initialNode is null
-        if ($destinationNode === null || $initialNode === null) {
+        // Check if either $destinationNode or $currentNode is null
+        if ($destinationNode === null || $currentNode === null) {
             return false; // You may return false or handle this case according to your business logic.
         }
-    
-        // Retrieve the order of the destination and initial nodes within the predefined route.
+
+        // Check if the pivot relationship exists for both nodes
+        if (!$destinationNode->pivot || !$currentNode->pivot) {
+            return false; // Handle this case as needed.
+        }
+
+        // Retrieve the order of the destination and current nodes within the predefined route.
         $destinationOrder = $destinationNode->pivot->order;
-        $initialOrder = $initialNode->pivot->order;
-    
-        // Ensure that the destination node follows the initial node in the route.
-        return $destinationOrder > $initialOrder;
+        $currentOrder = $currentNode->pivot->order;
+
+        // Ensure that the destination node follows the current node in the route.
+        return $destinationOrder > $currentOrder;
     }
+
+    
+
+
+
+
+
+
+
+
+
+
     
 
 

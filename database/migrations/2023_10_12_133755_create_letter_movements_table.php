@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('node_id'); // Foreign Key referencing Node model
             $table->timestamp('movement_date');
             $table->enum('status', ['In Progress', 'Completed', 'Pending', 'Cancelled'])->default('In Progress');
+            $table->timestamp('completed_at')->nullable();
             $table->timestamps();
         });
     }
