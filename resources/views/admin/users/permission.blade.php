@@ -9,6 +9,7 @@
         <div class="max-w-5xl  sm:px-6 lg:px-8 ">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2 py-12">
                 <div class=" my-8 mx-20">
+                    {{-- profile image --}}
                     @foreach ($users as $user)
                         @if ($user->id == $clickedUserId)
                             <div class="flex items-center">
@@ -23,6 +24,7 @@
 
                     <div class="mt-6 p-2 bg-slate-100 ">
                         <h2 class="text-2xl font-semibold">Permissions</h2>
+                        {{-- Permission desplay  --}}
                         <div class="flex space-x-2 mt-4 p-2">
                             @if ($user->permissions)
                                 @foreach ($user->permissions as $user_permission)
@@ -37,6 +39,8 @@
                                 @endforeach
                             @endif
                         </div>
+
+                        {{-- Section for assign permission to user --}}
                         <div class="max-w-xl mt-6">
                             <form method="POST" action="{{ route('admin.users.permissions', $user->id) }}">
                                 @csrf

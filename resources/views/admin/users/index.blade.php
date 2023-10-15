@@ -70,7 +70,7 @@
                                         <th class="py-3 px-6 text-left">Client</th>
                                         <th class="py-3 px-6 text-left">Role</th>
                                         <th class="py-3 px-6 text-center">Email</th>
-                                        <th class="py-3 px-6 text-center">Status</th>
+                                        <th class="py-3 px-6 text-center">department</th>
                                         <th class="py-3 px-6 text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -108,12 +108,10 @@
                                         </td>
                                         <td class="py-3 dark:text-white px-6 text-center">
                                             <span
-                                                class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">Active</span>
+                                                class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $user->department?->name }}</span>
                                         </td>
                                         <td class="py-3 px-6 text-center">
                                             <div class="flex item-center justify-center">
-
-
                                                 <a href="{{ route('admin.users.show', $user->id) }}"
                                                     class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110 group">
                                                     <div class="relative">
@@ -162,14 +160,14 @@
 
                                                     </div>
                                                 </a>
-                                         
+
                                                 <a href="{{ route('admin.users.edit', $user->id) }}"
                                                     class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110">
                                                     <div>
 
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke-width="1.5"
-                                                            stroke="currentColor" class="w-4 h-4">
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="blue"
+                                                            class="w-4 h-4">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                                         </svg>
@@ -192,7 +190,7 @@
                                                         <div
                                                             class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110 group">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                viewBox="0 0 24 24" stroke="red">
                                                                 <path stroke-linecap="round"
                                                                     stroke-linejoin="round" stroke-width="2"
                                                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -210,7 +208,7 @@
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                                                           </svg>
-                                                          
+
 
                                                     </div>
                                                 </a> --}}

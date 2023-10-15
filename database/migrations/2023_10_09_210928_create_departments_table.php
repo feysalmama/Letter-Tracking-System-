@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('image')->nullable();
-        });
+              Schema::create('departments', function (Blueprint $table) {
+         $table->id();
+        $table->string('name');
+        $table->string('description');
+        $table->timestamps();
+    });
     }
 
     /**
@@ -23,14 +26,8 @@ return new class extends Migration
      *
      * @return void
      */
-    // public function down()
-    // {
-    //     Schema::table('users', function (Blueprint $table) {
-    //         //
-    //     });
-    // }
-     public function down()
+    public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('departments');
     }
 };
