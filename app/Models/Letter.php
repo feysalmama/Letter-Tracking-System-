@@ -42,7 +42,26 @@ class Letter extends Model
 
 
 
+ // Function to get the initial node for the letter
+ public function getInitialNode()
+ {
+     $letterType = $this->letterType;
 
+     if ($letterType) {
+         $predefinedRoute = $letterType->routes->first();
+
+         if ($predefinedRoute) {
+             // Get the first node in the predefined route
+             $initialNode = $predefinedRoute->nodes()->orderBy('order')->first();
+
+             if ($initialNode) {
+                 return $initialNode;
+             }
+         }
+     }
+
+     return null;
+ }
 
 
     public function getCurrentNode()

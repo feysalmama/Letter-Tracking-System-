@@ -53,7 +53,7 @@ public function store(Request $request)
             'birth_date' => 'required',
             'password' => 'required|min:8|confirmed', // Add the 'confirmed' rule
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'role' => 'required|in:user,office', // Make sure you include 'role' in the form.
+            'role' => 'required|in:user,office', // Make sure you include 'role' in the form.
             'department_id' => 'required'
         ]);
 
