@@ -11,51 +11,11 @@
     <div class="py-2 w-full">
         <div class="max-w-7xl mx-auto ">
 
-            <div class="flex justify-between items-center">
-                <div class="my-2 flex sm:flex-row flex-col">
-                    <div class="flex flex-row mb-1 sm:mb-0">
-                        <div class="relative">
-                            <select
-                                class="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                                <option>5</option>
-                                <option>10</option>
-                                <option>20</option>
-                            </select>
-
-                        </div>
-                        <div class="relative">
-                            <select
-                                class=" h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                                <option>All</option>
-                                <option>Active</option>
-                                <option>Inactive</option>
-                            </select>
-
-                        </div>
-                    </div>
-                    <div class="block relative">
-                        <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
-                            <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
-                                <path
-                                    d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
-                                </path>
-                            </svg>
-                        </span>
-                        <input placeholder="Search"
-                            class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
-                    </div>
-
-                </div>
-                <div class="flex justify-end p-2">
+            <div class="flex justify-end items-center mt-6 p-2">
+ 
                     <a href="{{ route('admin.departments.create') }}"
                         class="flex items-center justify-center px-3 py-2 space-x-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50">Create
                         departments</a>
-                </div>
-
-
-
-
-
             </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -67,7 +27,7 @@
                                         <th class="py-3 px-6 text-left">departments</th>
 
 
-                                        <th class="py-3 px-6 text-center">description</th>
+                                        <th class="py-3 px-6 text-left">description</th>
 
                                         <th class="py-3 px-6 text-center">Actions</th>
                                     </tr>
@@ -82,7 +42,7 @@
                                                     <span>{{ $department->name }}</span>
                                                 </div>
                                             </td>
-                                            <td class="py-3 px-6 text-center dark:text-white ">
+                                            <td class="py-3 px-6 text-left dark:text-white ">
                                                 <span>{{ $department->description }}</span>
                                             </td>
 
