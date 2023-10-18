@@ -36,63 +36,68 @@ class LetterMovementController extends Controller
         return view('letter.letter_movement.createMovement', compact('letter', 'destinationNode'));
     }
 
-    public function recordMovement(Request $request, Letter $letter)
+        public function recordMovement(Request $request, Letter $letter)
     {
-
-        //  Validate the input data
-        $status = $request->validate([
-            'status' => 'required|in:In Progress,Completed,Pending,Rejected',
+        // Validate the input data
+        $validated = $request->validate([
+            'status' => 'required|in:In Progress,Completed,Pending,Cancelled',
+            'reason' => 'string',
         ]);
 
         // Calculate the destination node using the helper method
         $destinationNode = $letter->getDestinationNode();
-       
-    
-        // Determine the current node (you may need to implement a way to determine this, such as tracking the current handler in your application).
-    
-       
-         // Update the status of the current node.
-        $currentNode = $letter->getCurrentNode(); // Implement a method to get the current node.
-        
+
+        // Determine the current node (you may need to implement a method to get the current node).
+        $currentNode = $letter->getCurrentNode();
         $latestMovement = $letter->movements()->latest('created_at')->first();
-        
 
-        // Check if the current node is the last node in the predefined route.
-        if ($currentNode->id === $destinationNode->id) {
-            // If the current node is the last node, update its status and return without creating a new movement record.
-            $latestMovement->update(['status' => $status['status']]);
+        // Check if the status is "Rejected."
+        if ($validated['status'] === 'Cancelled') {
+           // Update the status for the rejection of the letter
+            $latestMovement->update([
+                'status' => $validated['status'],
+                'reason' => $validated['reason'], // Assuming you have a field for the rejection reason in your form.
+            ]);
 
-            return redirect()->route('letter.letter-movements.index', $letter)->with('success', 'Letter is now at the last node with status updated.');
+
+
+            // Stop the movement of the letter and redirect to provide a reason for rejection.
+            return redirect()->route('letter.letter-movements.index')->with('error', 'Letter Rejected.');
+            // return redirect()->route('letter.letter.reject', ['letter' => $letter]);
         }
 
+        // Update the status of the current node.
+        $latestMovement = $letter->movements()->latest('created_at')->first();
+        $latestMovement->update(['status' => $validated['status']]);
 
-        // updating the latest movement record when creating the next one
-        $latestMovement->update(['status' => $status['status']]); // Update the status based on your business logic.
-    
+        // Check if the status is "Completed."
+        if ($validated['status'] === 'Completed') {
+            // Check if the current node is the last node in the predefined route.
+            if ($currentNode->id === $destinationNode->id) {
+                // Do something specific when it's the last node.
+                // You can return a success message here.
+                return redirect()->route('letter.letter.status', $letter)->with('success', 'Letter is now at the last node with status updated.');
+            } else {
+                // Create a new movement record with "In Progress" status for the destination node.
+                $newMovement = new LetterMovement([
+                    'movement_date' => now(),
+                    'status' => 'In Progress',
+                ]);
 
-        
+                // Associate the new movement with the letter and destination node.
+                $newMovement->letter()->associate($letter);
+                $newMovement->node()->associate($destinationNode);
 
-        // Ensure that the destination node follows the current node.
-        if (!$letter->followsNode($destinationNode, $currentNode)) {
-            return redirect()->route('letter.letter-movements.index', $letter)->with('error', 'Invalid Destination Node');
+                $newMovement->save();
+            }
         }
-    
-        // Create a new movement record with "In Progress" status.
-        $movement = new LetterMovement([
-            'movement_date' => now(),
-            'status' => 'In Progress', // Use the validated status from the request
-        ]);
-    
-        // Use the relationships to associate the letter and destination node.
-        $movement->letter()->associate($letter);
-        $movement->node()->associate($destinationNode);
-    
-        $movement->save();
-    
+
         // Optionally, you can send notifications or update other relevant data.
-    
+
         return redirect()->route('letter.letter-movements.index')->with('success', 'Movement recorded successfully.');
     }
+
+
 
     
     

@@ -16,6 +16,7 @@ class LetterMovement extends Model
         'node_id',
         'movement_date',
         'status',
+        'reason',
     ];
 
     public function letter()
