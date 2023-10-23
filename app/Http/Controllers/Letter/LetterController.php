@@ -123,7 +123,32 @@ class LetterController extends Controller
 
     }
 
+
+    // for trying to ...
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Letter  $letter
+     * @return \Illuminate\Http\Response
+     */
+    public function reject(Letter $letter)
+    {
+        return view('letter.letter.reject',compact('letter'));
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Letter  $letter
+     * @return \Illuminate\Http\Response
+     */
+    public function status(Letter $letter)
+    {
+        return view('letter.letter.status',compact('letter'));
+    }
+
+
+    /**
+     * 
      * Display the specified resource.
      *
      * @param  \App\Models\Letter  $letter

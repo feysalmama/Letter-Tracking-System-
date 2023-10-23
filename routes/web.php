@@ -73,13 +73,14 @@ Route::middleware(['auth', 'role:admin'])->name('letter.')->prefix('letter')->gr
 
     
     // Letter and letter_Route Routes
-    Route::resource('letter', LetterController::class);
+    Route::resource('letter', LetterController::class); 
     Route::resource('letter-types', LetterTypeController::class);
     Route::resource('predefined-routes', RouteController::class);
     Route::resource('nodes', NodeController::class);
     
-     // Route for printing the letter information
-     Route::get('/letters/{letter}/print', [ LetterController::class,'printLetter' ])->name('letter.print');
+    // Route for printing the letter information or rejecting
+    Route::get('/letters/{letter}/print', [ LetterController::class,'printLetter' ])->name('letter.print');
+    Route::get('letter/{letter}/status',[ LetterController::class,'status'])->name('letter.status');
     
      // Route for letter movement /letter-movements
      Route::resource('letter-movements', LetterMovementController::class);

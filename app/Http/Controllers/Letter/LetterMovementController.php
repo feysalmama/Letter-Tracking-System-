@@ -40,7 +40,7 @@ class LetterMovementController extends Controller
         return view('letter.letter_movement.createMovement', compact('letter', 'destinationNode'));
     }
 
-    public function recordMovement(Request $request, Letter $letter)
+        public function recordMovement(Request $request, Letter $letter)
     {
         $letterMovements = LetterMovement::all();
         //  Validate the input data
@@ -108,6 +108,8 @@ class LetterMovementController extends Controller
 
         return redirect()->route('letter.letter-movements.index')->with('success', 'Movement recorded successfully.');
     }
+
+
 
 
 
