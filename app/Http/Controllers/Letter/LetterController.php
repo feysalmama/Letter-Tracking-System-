@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Letter;
 
+use App\Models\User;
 use App\Models\Letter;
 use App\Models\LetterType;
 use Illuminate\Support\Str;
@@ -10,6 +11,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\InnitialNodeNotification;
+use App\Notifications\LetterAcceptedNotification;
+
 
 class LetterController extends Controller
 {
@@ -22,7 +27,7 @@ class LetterController extends Controller
     {
         $letters = Letter::all();
         return view('letter.letter.index', compact('letters'));
-   
+
     }
 
     /**
@@ -34,7 +39,7 @@ class LetterController extends Controller
     {
         $letterTypes = LetterType::all(); // Fetch all LetterTypes
         return view('letter.letter.create', compact('letterTypes'));
-       
+
     }
 
     /**
@@ -43,7 +48,11 @@ class LetterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+
+
+
+     public function store(Request $request)
     {
 
          // Validate the incoming request data
@@ -55,11 +64,11 @@ class LetterController extends Controller
             'customer_address' => 'required|string',
             'file_path' => 'required|file',
         ]);
-        
+
 
 
         // Generate a unique code
-     
+
         $uniqueCode = 'LET-' . now()->format('YmdHis') . '-' . Str::random(4);
 
 
@@ -81,21 +90,35 @@ class LetterController extends Controller
 
         // Combine the validated data and additional data
         $letterData = array_merge($validated, $additionalData);
-        
+
         $letter =Letter::create($letterData);
 
          // Record the initial movement (finding initial node in the route)
         $initialNode = $letter->getInitialNode();
 
-        if ($initialNode) {
-            // Record the initial movement
-            $letter->movements()->create([
-                'node_id' => $initialNode->id,
-                'movement_date' => now(),
-            ]);
-        }
 
-        // Redirect to a view or route, 
+       if ($initialNode) {
+        $email = $letter->customer_email;
+
+        // Record the initial movement
+        $movement = $letter->movements()->create([
+            'node_id' => $initialNode->id,
+            'movement_date' => now(),
+        ]);
+
+        // Send the notification to the retrieved email address to our customer
+        Notification::route('mail', $email)
+            ->notify(new LetterAcceptedNotification($letter));
+    }
+
+         // Send the notification to the retrieved email address to initial node user
+          $userEmail = $initialNode->user->email;
+           $user = User::where('email', $userEmail)->first();
+          Notification::send($user, new InnitialNodeNotification($letter));
+
+
+
+        // Redirect to a view or route,
         return redirect()->route('letter.letter.index')->with('success', 'Letter created successfully.');
 
     }
@@ -121,7 +144,7 @@ class LetterController extends Controller
     {
         $letterTypes = LetterType::all();
         return view('letter.letter.edit', compact('letter','letterTypes'));
-  
+
     }
 
     /**
@@ -185,24 +208,24 @@ class LetterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Letter $letter)
-    { 
+    {
         // Ensure you have a reference to the file path
         $filePath = $letter->file_path;
-    
+
         // Additional checks for other relationships, if applicable
-    
+
         // Delete the letter record
         $letter->delete();
-    
+
         // Delete the associated file
         Storage::delete($filePath);
-    
+
         return redirect()->route('letter.letter.index')
             ->with('success', 'Letter deleted successfully.');
     }
 
 
-    public function printLetter(Letter $letter) 
+    public function printLetter(Letter $letter)
     {
         return view('letter.letter.print', compact('letter'));
 

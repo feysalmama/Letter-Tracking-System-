@@ -19,11 +19,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
-        $this->call(RoleSeeder::class);
-        $this->call(AdminSeeder::class);
-        
-        
+        $this->call([
+          RoleSeeder::class,
+          AdminSeeder::class,
+
+        ]);
+
+
+
+        // \App\Models\User::factory(10)->create();
+        // $this->call(RoleSeeder::class);
+        // $this->call(AdminSeeder::class);
+
+
         $faker = Faker::create();
         // Create and insert letter types using Faker
         for ($i = 1; $i <= 3; $i++) {

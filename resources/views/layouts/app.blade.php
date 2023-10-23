@@ -25,7 +25,7 @@
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
         <!-- Desktop sidebar -->
         <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
-         @include('components.sidebar')
+            @include('components.sidebar')
         </aside>
 
 
@@ -36,8 +36,7 @@
             x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
             class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"></div>
-        <aside
-            class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 md:hidden"
+        <aside class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 md:hidden"
             x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
             x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
             x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
@@ -95,8 +94,51 @@
                                 </div>
                             </button>
                         </li>
+
+
+
                         <!-- Notifications menu -->
                         <li class="relative">
+                            <button
+                                class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
+                                @click="toggleNotificationsMenu" @keydown.escape="closeNotificationsMenu"
+                                aria-label="Notifications" aria-haspopup="true">
+                                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z">
+                                    </path>
+                                </svg>
+                                <!-- Notification badge -->
+                                @auth
+                                    @php
+                                        $authUser = auth()->user();
+                                        $unreadNotifications = $authUser->unreadNotifications;
+                                        $notificationCount = count($unreadNotifications);
+                                    @endphp
+                                    @if ($notificationCount > 0)
+                                        <span aria-hidden="true"
+                                            class="absolute top-0 right-0 inline-block w-5 h-5 transform translate-x-1 text-sm -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800">{{ $notificationCount }}</span>
+                                    @endif
+                                @endauth
+                            </button>
+                            <div x-show="isNotificationsMenuOpen">
+                                <ul x-transition:leave="transition ease-in duration-150"
+                                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                                    @click.outside="closeNotificationsMenu" @keydown.escape="closeNotificationsMenu"
+                                    class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
+                                    aria-label="submenu">
+                                    @auth
+                                        @foreach ($unreadNotifications as $notification)
+                                            <li class="flex">
+                                                <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                                    href="#">
+                                                    <span>{{ $notification->data['message'] }}</span>
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    @endauth
+
+                                    {{-- <li class="relative">
                             <button
                                 class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
                                 @click="toggleNotificationsMenu" @keydown.escape="closeNotificationsMenu"
@@ -116,17 +158,16 @@
                                     @click.outside="closeNotificationsMenu" @keydown.escape="closeNotificationsMenu"
                                     class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
                                     aria-label="submenu">
-                                    <li class="flex">
-                                        <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                            href="#">
-                                            <span>Messages</span>
-                                            <span
-                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600">
-                                                13
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="flex">
+                                        <span
+                                            class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600">
+                                        </span>
+                                            <li class="flex">
+                                                <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                                    href="#">
+                                                    <span>messages</span>
+                                                </a>
+                                            </li>
+                                    {{-- <li class="flex">
                                         <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                                             href="#">
                                             <span>Sales</span>
@@ -141,18 +182,20 @@
                                             href="#">
                                             <span>Alerts</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
                         </li>
+
+
                         <!-- Profile menu -->
+
                         <li class="relative">
                             <button class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
                                 @click="toggleProfileMenu" aria-label="Account" aria-haspopup="true">
-                                <img class="object-cover w-8 h-8 rounded-full"
-                                    src="{{Auth::user()->image}}"
+                                <img class="object-cover w-8 h-8 rounded-full" src="{{ Auth::user()->image }}"
                                     alt="" aria-hidden="true" />
-                
+
                             </button>
                             <div x-show="isProfileMenuOpen">
                                 <ul x-transition:leave="transition ease-in duration-150"
@@ -187,19 +230,24 @@
                                             <span>Settings</span>
                                         </a>
                                     </li>
-                            
+
                                     <li class="flex">
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
-                                            <button type="submit" class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200">
-                                                <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                                            <button type="submit"
+                                                class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+                                                <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
+                                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path
+                                                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1">
+                                                    </path>
                                                 </svg>
                                                 <span>Log out</span>
                                             </button>
                                         </form>
                                     </li>
-                                    
+
                                 </ul>
                             </div>
                         </li>

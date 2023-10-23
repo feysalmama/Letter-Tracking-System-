@@ -22,7 +22,7 @@ class Letter extends Model
         'customer_address',
         'file_path',
     ];
-    
+
     public function letterType()
     {
         return $this->belongsTo(LetterType::class, 'letter_type_id');
@@ -70,36 +70,36 @@ class Letter extends Model
         $mostRecentMovement = $this->movements()->latest('created_at')->first();
 
         // return $mostRecentMovement;
-    
+
         if ($mostRecentMovement) {
             // Retrieve the node ID associated with the most recent movement
             $currentNodeId = $mostRecentMovement->node_id;
-    
+
             // Load the node with the pivot data for 'order'
             $currentNode = Node::with(['routes' => function ($query) use ($currentNodeId) {
                 $query->where('node_route.node_id', $currentNodeId); // Assuming the pivot table is named 'node_route'
             }])
             ->where('id', $currentNodeId)
             ->first();
-    
+
             if ($currentNode) {
                 // Extract the pivot data for 'order'
                 $currentNode->pivot = $currentNode->routes->first()->pivot;
-    
+
                 return $currentNode;
             }
         }
-    
+
         // Handle the case where no movements exist for the letter (e.g., the letter is at the initial node).
         return null;
     }
-    
+
 
         public function getDestinationNode()
     {
         // Get the current node using the getCurrentNode method
         $currentNode = $this->getCurrentNode();
-        
+
         if (!$currentNode) {
             return null; // Handle the case where the current node is not found.
         }
@@ -120,7 +120,7 @@ class Letter extends Model
         if (!$destinationNode) {
             return $currentNode; // Handle the case where the current node is the last node.
         }
-        
+
         return $destinationNode;
     }
 
@@ -144,19 +144,4 @@ class Letter extends Model
         // Ensure that the destination node follows the current node in the route.
         return $destinationOrder > $currentOrder;
     }
-
-    
-
-
-
-
-
-
-
-
-
-
-    
-
-
 }

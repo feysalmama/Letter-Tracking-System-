@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('route_id');
             $table->integer('order')->default(1); // Order of the node in the route
             $table->timestamps();
-            
             $table->foreign('node_id')->references('id')->on('nodes');
             $table->foreign('route_id')->references('id')->on('routes');
         });

@@ -11,10 +11,10 @@
 
             <div class="flex justify-end items-center mt-6 p-2">
 
-                    <a href="{{ route('letter.letter-types.create') }}"
-                        class="flex items-center justify-center px-3 py-2 space-x-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50">
-                        + Add Letter Types
-                    </a>
+                <a href="{{ route('letter.letter-types.create') }}"
+                    class="flex items-center justify-center px-3 py-2 space-x-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50">
+                    + Add Letter Types
+                </a>
 
             </div>
             <div class="flex flex-col">
@@ -35,11 +35,6 @@
 
                                     @foreach ($letterTypes as $letter)
                                         <tr class="border-b border-gray-200 hover:bg-gray-400">
-
-
-
-
-
                                             <td class="py-3 px-6 text-left dark:text-white capitalize">
                                                 <span>{{ $letter->name }}</span>
                                             </td>

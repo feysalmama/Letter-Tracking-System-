@@ -10,6 +10,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\UserCreatedNotification;
+// use App\Notifications\RegistrationSuccessful;
+// use Illuminate\Support\Facades\Notification;
 
 class UserController extends Controller
 {
@@ -71,9 +75,9 @@ public function store(Request $request)
 
     // Save the user using the validated data
     $user = User::create($validated);
+//  $user = User::create($request->all());
 
 
-    
     // Assign the role based on the 'role' field
     if ($validated['role'] === 'office') {
         $user->assignRole('office'); // Use the correct role name defined in your system.
@@ -81,6 +85,8 @@ public function store(Request $request)
         $user->assignRole('user');
     }
 
+     Notification::send($user, new UserCreatedNotification());
+// $user->notify(new RegistrationSuccessful());
     return redirect()->route('admin.users.index')->with('message', 'User created.');
 }
 

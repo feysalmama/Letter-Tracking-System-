@@ -32,7 +32,6 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-gray-600 text-sm font-light">
-
                                     @foreach ($routes as $route)
                                         <tr class="border-b border-gray-200 hover:bg-gray-400">
 

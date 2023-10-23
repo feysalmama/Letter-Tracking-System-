@@ -11,10 +11,10 @@
 
             <div class="flex justify-end items-center mt-6 p-2">
 
-                    <a href="{{ route('letter.letter.create') }}"
-                        class="flex items-center justify-center px-3 py-2 space-x-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50">
-                        + Add Letter 
-                    </a>
+                <a href="{{ route('letter.letter.create') }}"
+                    class="flex items-center justify-center px-3 py-2 space-x-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50">
+                    + Add Letter
+                </a>
             </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -47,7 +47,7 @@
                                             <td class="py-3 px-6 text-left dark:text-white">
                                                 <span>{{ $letter->customer_name }}</span>
                                             </td>
-                                           
+
                                             <td class="py-3 px-6 text-center">
                                                 <div class="flex item-center justify-center">
 
@@ -64,7 +64,7 @@
                                                                     stroke-width="2"
                                                                     d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                             </svg>
-    
+
                                                         </div>
                                                     </a>
 

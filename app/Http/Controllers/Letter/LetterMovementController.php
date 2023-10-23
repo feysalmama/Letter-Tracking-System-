@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Letter;
 
 use App\Models\Node;
+use App\Models\User;
 use App\Models\Letter;
 use Illuminate\Http\Request;
 use App\Models\LetterMovement;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\LetterComingNotification;
+use App\Notifications\LetterProgressingNotification;
 
 class LetterMovementController extends Controller
 {
@@ -19,14 +23,14 @@ class LetterMovementController extends Controller
     {
         $letterMovements = LetterMovement::all();
         return view('letter.letter_movement.index', compact('letterMovements'));
-  
+
     }
 
     public function createMovement(Letter $letter)
     {
         // Get the destination node using the special function in the Letter model
-        $destinationNode = $letter->getDestinationNode(); 
-             
+        $destinationNode = $letter->getDestinationNode();
+
 
         if (!$destinationNode) {
             return redirect()->route('letter.letter-movements.index')->with('error', 'Invalid Destination Node');
@@ -38,7 +42,7 @@ class LetterMovementController extends Controller
 
     public function recordMovement(Request $request, Letter $letter)
     {
-
+        $letterMovements = LetterMovement::all();
         //  Validate the input data
         $status = $request->validate([
             'status' => 'required|in:In Progress,Completed,Pending,Rejected',
@@ -46,16 +50,16 @@ class LetterMovementController extends Controller
 
         // Calculate the destination node using the helper method
         $destinationNode = $letter->getDestinationNode();
-       
-    
+
+
         // Determine the current node (you may need to implement a way to determine this, such as tracking the current handler in your application).
-    
-       
+
+
          // Update the status of the current node.
         $currentNode = $letter->getCurrentNode(); // Implement a method to get the current node.
-        
+
         $latestMovement = $letter->movements()->latest('created_at')->first();
-        
+
 
         // Check if the current node is the last node in the predefined route.
         if ($currentNode->id === $destinationNode->id) {
@@ -68,34 +72,45 @@ class LetterMovementController extends Controller
 
         // updating the latest movement record when creating the next one
         $latestMovement->update(['status' => $status['status']]); // Update the status based on your business logic.
-    
 
-        
+
+
 
         // Ensure that the destination node follows the current node.
         if (!$letter->followsNode($destinationNode, $currentNode)) {
             return redirect()->route('letter.letter-movements.index', $letter)->with('error', 'Invalid Destination Node');
         }
-    
+
         // Create a new movement record with "In Progress" status.
         $movement = new LetterMovement([
             'movement_date' => now(),
             'status' => 'In Progress', // Use the validated status from the request
         ]);
-    
+
         // Use the relationships to associate the letter and destination node.
-        $movement->letter()->associate($letter);
-        $movement->node()->associate($destinationNode);
-    
-        $movement->save();
-    
-        // Optionally, you can send notifications or update other relevant data.
-    
+           $movement->letter()->associate($letter);
+           $movement->node()->associate($destinationNode);
+
+           $movement->save();
+
+         // Send the notification to the user email associated with the destination node
+           $userEmail = $destinationNode->user->email;
+           $user = User::where('email', $userEmail)->first();
+          Notification::send($user, new LetterComingNotification($letter, $currentNode));
+
+
+         $customerEmail = $letterMovements->pluck('letter.customer_email')->first();
+
+        if ($customerEmail) {
+          Notification::route('mail', $customerEmail)->notify(new LetterProgressingNotification($letter, $currentNode, $destinationNode));
+        }
+
+
         return redirect()->route('letter.letter-movements.index')->with('success', 'Movement recorded successfully.');
     }
 
-    
-    
+
+
 
 
 
@@ -136,7 +151,7 @@ class LetterMovementController extends Controller
 //         $status = $request->validate([
 //             'status' => 'required|in:In Progress,Completed,Pending,Rejected',
 //         ]);
-        
+
 //         // Ensure that the destination node follows the current node based on their orders.
 //         if (!$letter->followsNode($currentNode, $destinationNode)) {
 //             return redirect()->route('letter.letter-movements.index', $letter)->with('error', 'Invalid Destination Node');
@@ -168,7 +183,7 @@ class LetterMovementController extends Controller
     // public function recordMovement(Request $request, Letter $letter)
     // {
     //     // Calculate the destination node using the helper method
-    //     $destinationNode = $letter->getDestinationNode(); 
+    //     $destinationNode = $letter->getDestinationNode();
     //     // return $destinationNode;
 
 
@@ -208,50 +223,50 @@ class LetterMovementController extends Controller
 
 
     // public function recordMovement(Request $request, Letter $letter)
-    // {  
+    // {
     //     // Calculate the destination node using the helper method
-    //     $destinationNode = $letter->getDestinationNode(); 
-       
+    //     $destinationNode = $letter->getDestinationNode();
+
     //     // Validate the input data
     //     $status = $request->validate([
     //         'status' => 'required|in:In Progress,Completed,Pending,Rejected',
     //     ]);
-    
+
     //     // Calculate the initial node using the helper method
     //     $initialNode = $letter->getInitialNode();
-        
+
 
     //     if (!$initialNode) {
     //         return redirect()->route('letters.show', $letter)->with('error', 'Invalid Letter Route');
     //     }
 
-        
-    
+
+
     //     // Ensure that the destination node follows the initial node
     //     if (!$letter->followsNode($destinationNode, $initialNode)) {
     //         return redirect()->route('letter.letter-movements.index', $letter)->with('error', 'Invalid Destination Node');
     //     }
-        
+
 
     //     // Create a new movement record.
     //     $movement = new LetterMovement([
     //         'movement_date' => now(),
     //         'status' => 'In Progress', // Use the validated status from the request
     //     ]);
-    
+
     //     // Use the relationships to associate the letter and destination node
     //     $movement->letter()->associate($letter);
     //     $movement->node()->associate($destinationNode);
-    
+
     //     $movement->save();
-    
+
     //     // Optionally, you can send notifications or update other relevant data.
-    
+
     //     return redirect()->route('letter.letter-movements.index')->with('success', 'Movement recorded successfully.');
     // }
 
 
-    
+
 
 
 
