@@ -148,16 +148,40 @@ class LetterController extends Controller
 
 
     /**
-     * 
+     *
      * Display the specified resource.
      *
      * @param  \App\Models\Letter  $letter
      * @return \Illuminate\Http\Response
      */
-    public function show(Letter $letter)
-    {
-        //
+
+//      public function show($letterId)
+// {
+
+
+public function show($letter)
+{
+      $letter = Letter::findOrFail($letter);
+      $filePath = $letter->file_path;
+
+    // Retrieve the specific notification linked to the current letter
+     $notification = Auth::user()->unreadNotifications()->where(function ($query) use ($letter) {
+            $query->where('type', 'InitialNodeNotification')->orWhere('type', 'LetterComingNotification')->where('data->letter_id', $letter);
+        })->first();
+
+    // Mark the specific notification as read
+    if ($notification) {
+        $notification->markAsRead();
     }
+// dd($letterId);
+    // Retrieve unread notifications of the authenticated user
+    $notifications = Auth::user()->unreadNotifications;
+
+    return view('letter.letter.show', [
+        'filePath' => $filePath
+
+    ]);
+}
 
     /**
      * Show the form for editing the specified resource.

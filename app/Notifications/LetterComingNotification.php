@@ -66,6 +66,7 @@ class LetterComingNotification extends Notification
     {
     return [
         'message' => 'Letter transferred to you!',
+        'letter_id' => $this->letter->id,
     ];
     }
 }

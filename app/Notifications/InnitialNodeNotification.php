@@ -6,10 +6,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Notifiable;
 
 class InnitialNodeNotification extends Notification
 {
-    use Queueable;
+    use Queueable,Notifiable;
 
     /**
      * Create a new notification instance.
@@ -21,6 +22,7 @@ class InnitialNodeNotification extends Notification
      public function __construct($letter)
     {
         $this->letter = $letter;
+        //  $notifiableName = $this->getNotifiableName($notifiable);
     }
 
     /**
@@ -64,6 +66,7 @@ class InnitialNodeNotification extends Notification
     {
     return [
         'message' => 'New letter recieved',
+        'letter_id' => $this->letter->id,
     ];
     }
 }

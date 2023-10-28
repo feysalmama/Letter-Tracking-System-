@@ -109,17 +109,17 @@
                                     </path>
                                 </svg>
                                 <!-- Notification badge -->
-                                @auth
-                                    @php
-                                        $authUser = auth()->user();
-                                        $unreadNotifications = $authUser->unreadNotifications;
-                                        $notificationCount = count($unreadNotifications);
-                                    @endphp
-                                    @if ($notificationCount > 0)
-                                        <span aria-hidden="true"
-                                            class="absolute top-0 right-0 inline-block w-5 h-5 transform translate-x-1 text-sm -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800">{{ $notificationCount }}</span>
-                                    @endif
-                                @endauth
+
+                                @php
+                                    $authUser = auth()->user();
+                                    $unreadNotifications = $authUser->unreadNotifications;
+                                    $notificationCount = count($unreadNotifications);
+                                @endphp
+                                @if ($notificationCount > 0)
+                                    <span aria-hidden="true"
+                                        class="absolute top-0 right-0 inline-block w-5 h-5 transform translate-x-1 text-sm -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800">{{ $notificationCount }}</span>
+                                @endif
+
                             </button>
                             <div x-show="isNotificationsMenuOpen">
                                 <ul x-transition:leave="transition ease-in duration-150"
@@ -127,16 +127,32 @@
                                     @click.outside="closeNotificationsMenu" @keydown.escape="closeNotificationsMenu"
                                     class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
                                     aria-label="submenu">
-                                    @auth
-                                        @foreach ($unreadNotifications as $notification)
-                                            <li class="flex">
-                                                <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                                    href="#">
+                                    @foreach (Auth::user()->unreadNotifications as $notification)
+                                        <li class="flex">
+                                            @if ($notification->type === 'UserCreatedNotification')
+                                                <span>{{ $notification->data['message'] }}</span>
+                                                <small>{{ $notification->created_at->diffForHumans() }}</small>
+                                            @elseif (
+                                                $notification->type === 'App\Notifications\InitialNodeNotification' ||
+                                                    $notification->type === 'App\Notifications\LetterComingNotification')
+                                                <a href="{{ route('letter.letter.show', ['letter' => $notification->data['letter_id']]) }}"
+                                                    class="items-center  w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+
                                                     <span>{{ $notification->data['message'] }}</span>
+                                                    <small>{{ $notification->created_at->diffForHumans() }}</small>
+
                                                 </a>
-                                            </li>
-                                        @endforeach
-                                    @endauth
+
+                                                @php
+                                                    $notification->markAsRead();
+                                                @endphp
+                                            @endif
+
+
+
+                                        </li>
+                                    @endforeach
+
 
                                     {{-- <li class="relative">
                             <button
@@ -154,10 +170,10 @@
                             </button>
                             <div x-show="isNotificationsMenuOpen">
                                 <ul x-transition:leave="transition ease-in duration-150"
-                                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                                    @click.outside="closeNotificationsMenu" @keydown.escape="closeNotificationsMenu"
+                                      x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                                        @click.outside="closeNotificationsMenu" @keydown.escape="closeNotificationsMenu"
                                     class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
-                                    aria-label="submenu">
+                                         aria-label="submenu">
                                         <span
                                             class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600">
                                         </span>
@@ -167,22 +183,24 @@
                                                     <span>messages</span>
                                                 </a>
                                             </li>
-                                    {{-- <li class="flex">
-                                        <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                            href="#">
-                                            <span>Sales</span>
-                                            <span
-                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600">
-                                                2
-                                            </span>
+                                       {{-- <li class="flex">
+                                      <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800  dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                                 href="#">
+                                                 <span>Sales</span>
+                                                       <span
+                                                         class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600">
+                                                      2
+                                                   </span>
                                         </a>
-                                    </li>
-                                    <li class="flex">
+                                        </li>
+                                          <li class="flex">
                                         <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                                             href="#">
                                             <span>Alerts</span>
                                         </a>
-                                    </li> --}}
+                                          </li> --}}
+
+
                                 </ul>
                             </div>
                         </li>

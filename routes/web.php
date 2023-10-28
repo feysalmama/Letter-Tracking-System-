@@ -64,24 +64,25 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     Route::resource('/departments', DepartmentController::class);
 
 
-  
+
 
 });
 
 
 Route::middleware(['auth', 'role:admin'])->name('letter.')->prefix('letter')->group(function () {
 
-    
+
     // Letter and letter_Route Routes
-    Route::resource('letter', LetterController::class); 
+    Route::resource('letter', LetterController::class);
     Route::resource('letter-types', LetterTypeController::class);
     Route::resource('predefined-routes', RouteController::class);
     Route::resource('nodes', NodeController::class);
-    
+
     // Route for printing the letter information or rejecting
     Route::get('/letters/{letter}/print', [ LetterController::class,'printLetter' ])->name('letter.print');
     Route::get('letter/{letter}/status',[ LetterController::class,'status'])->name('letter.status');
-    
+    // Route::get('letter/{letterId}/show',[ LetterController::class,'show'])->name('letter.show');
+
      // Route for letter movement /letter-movements
      Route::resource('letter-movements', LetterMovementController::class);
 
