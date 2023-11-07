@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LetterAcceptedNotification extends Notification
+class LetterAcceptedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -26,7 +26,7 @@ class LetterAcceptedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail','database'];
+        return ['mail'];
     }
 
     /**
@@ -50,7 +50,7 @@ class LetterAcceptedNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'Thank you for registering with our application!',
+        //    
         ];
     }
 }

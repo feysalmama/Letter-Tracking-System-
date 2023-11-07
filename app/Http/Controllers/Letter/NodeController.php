@@ -41,16 +41,17 @@ class NodeController extends Controller
      */
     public function store(Request $request)
     {
-     
+
     $validated = $request->validate([
             'name' => 'required|string',
             'office_name' => 'required|string',
             'in_or_out_office' => 'boolean',
-            'zone' => 'string|nullable',
+           'zone' => 'required|string',
+            'estimated_waiting_time' => 'required|integer',
             'woreda' => 'string|nullable',
             'route_ids' => 'array|exists:routes,id',
             'user_id' => 'required|exists:users,id', // Ensure that a user is selected
-            
+
         ]);
 
     // Create the node
@@ -105,15 +106,16 @@ class NodeController extends Controller
                 'office_name' => 'required|string',
                 'in_or_out_office' => 'boolean|nullable',
                 'zone' => 'required|string',
+                'estimated_waiting_time' => 'required|integer',
                 'woreda' => 'required|string',
                 'route_ids' => 'array|exists:routes,id',
             ]);
-        
+
             // Check if the node has any associated routes
             if ($node->routes->isEmpty()) {
                 return redirect()->route('letter.nodes.index')->with('error', 'Node update failed. The node does not have any associated routes.');
             }
-        
+
             // Use sync to update the associated routes based on the selected route_ids
             $node->routes()->sync($validated['route_ids']);
 
@@ -126,13 +128,13 @@ class NodeController extends Controller
                 }
             }
 
-        
+
             // Update all fields in the node model based on the $validated array
             $node->update($validated);
-        
+
             // Redirect to a view or route, e.g., back to the index view
             return redirect()->route('letter.nodes.index')->with('success', 'Node updated successfully.');
-    
+
     }
 
     /**
@@ -147,11 +149,11 @@ class NodeController extends Controller
         //     return redirect()->route('letter.nodes.index')
         //         ->with('error', 'Cannot delete node with an associated route.');
         // }
-    
+
         // Additional checks for other relationships, if applicable
-    
+
         $node->delete();
-    
+
         return redirect()->route('letter.nodes.index')
             ->with('success', 'Node deleted successfully.');
     }

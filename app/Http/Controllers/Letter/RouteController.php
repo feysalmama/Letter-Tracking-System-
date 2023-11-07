@@ -14,11 +14,21 @@ class RouteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $routes = Route::all();
-        return view('letter.predefined_routes.index', compact('routes'));
+   public function index()
+{
+    $routes = Route::all();
+
+    // Calculate the total waiting time for each route
+    foreach ($routes as $route) {
+        $totalWaitingTime = 0;
+        foreach ($route->nodes as $node) {
+            $totalWaitingTime += $node->estimated_waiting_time;
+        }
+        $route->totalWaitingTime = $totalWaitingTime;
     }
+
+    return view('letter.predefined_routes.index', compact('routes'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -55,7 +65,7 @@ class RouteController extends Controller
 
         // Redirect to a view or route, e.g., back to the index view
         return redirect()->route('letter.predefined-routes.index')->with('success', 'Route created successfully.');
-    
+
     }
 
     /**
@@ -106,7 +116,7 @@ class RouteController extends Controller
 
         // Redirect to a view or route, e.g., back to the index view
         return redirect()->route('letter.predefined-routes.index')->with('success', 'Route updated successfully.');
-    
+
     }
 
     /**
@@ -121,13 +131,13 @@ class RouteController extends Controller
         //     return redirect()->route('letter.predefined-routes.index')
         //         ->with('error', 'Cannot delete route with an associated nodes.');
         // }
-    
+
         // Additional checks for other relationships, if applicable
-    
+
         $predefined_route->delete();
-    
+
         return redirect()->route('letter.predefined-routes.index')
             ->with('success', 'Route deleted successfully.');
- 
+
     }
 }

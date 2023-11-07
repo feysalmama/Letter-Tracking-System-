@@ -10,10 +10,12 @@
         <div class=" mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col">
                 <div class="space-y-8 divide-y divide-gray-200 w-full mt-10">
-                    <iframe src="{{ $filePath }}" width="100%" height="500px"></iframe>
+                    <iframe src="{{ asset('storage/' . $filePath) }}" width="100%" height="500px"></iframe>
+
                 </div>
             </div>
-
         </div>
+        {{-- <iframe src="{{ route('/show/' . $fileName) }}" width="100%" height="500px"></iframe> --}}
+
     </div>
 </x-app-layout>

@@ -42,7 +42,7 @@
                                                 <span>{{ $letter->unique_code }}</span>
                                             </td>
                                             <td class="py-3 px-6 text-left dark:text-white">
-                                                <span>{{ $letter->letter_type_id }}</span>
+                                                <span>{{ $letter->letterType->name }}</span>
                                             </td>
                                             <td class="py-3 px-6 text-left dark:text-white">
                                                 <span>{{ $letter->customer_name }}</span>

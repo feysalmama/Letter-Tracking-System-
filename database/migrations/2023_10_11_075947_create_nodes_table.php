@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('office_name'); // Office name
             $table->boolean('in_or_out_office')->default('0'); // 1 for "In" and 0 for "Out"
             $table->string('zone'); // Zone or city administration
+            $table->integer('estimated_waiting_time'); // in minutes
             $table->string('woreda'); // Woreda (if applicable)
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();

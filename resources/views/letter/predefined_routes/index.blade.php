@@ -11,10 +11,10 @@
 
             <div class="flex justify-end items-center mt-6 p-2">
 
-                    <a href="{{ route('letter.predefined-routes.create') }}"
-                        class="flex items-center justify-center px-3 py-2 space-x-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50">
-                        + Add new Route
-                    </a>
+                <a href="{{ route('letter.predefined-routes.create') }}"
+                    class="flex items-center justify-center px-3 py-2 space-x-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50">
+                    + Add new Route
+                </a>
             </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -42,13 +42,13 @@
                                                 <span>{{ $route->office_name }}</span>
                                             </td>
                                             <td class="py-3 px-6 text-center dark:text-white">
-                                                <span>{{$route->estimated_waiting_time}}</span>
+                                                <span>{{ $route->totalWaitingTime }}</span>
                                             </td>
                                             <td class="py-3 px-6 text-center dark:text-white">
-                                                <span>{{$route->in_or_out_office }}</span>
+                                                <span>{{ $route->in_or_out_office }}</span>
                                             </td>
                                             <td class="py-3 px-6 text-left dark:text-white">
-                                                <span>{{$route->zone }}</span>
+                                                <span>{{ $route->zone }}</span>
                                             </td>
 
                                             <td class="py-3 px-6 text-center">

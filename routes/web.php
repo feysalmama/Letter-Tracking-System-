@@ -1,5 +1,6 @@
 <?php
-
+use App\Models\User;
+use App\Models\Letter;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
@@ -8,10 +9,10 @@ use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Letter\NodeController;
 use App\Http\Controllers\Letter\RouteController;
 use App\Http\Controllers\Letter\LetterController;
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Letter\LetterTypeController;
 use App\Http\Controllers\Letter\LetterMovementController;
-use App\Http\Controllers\Admin\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,10 @@ Route::get('/', function () {
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+  $letterCount = Letter::all()->count();
+  $userCount = User::all()->count();
+
+    return view('dashboard', compact('userCount','letterCount'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -81,19 +85,15 @@ Route::middleware(['auth', 'role:admin'])->name('letter.')->prefix('letter')->gr
     // Route for printing the letter information or rejecting
     Route::get('/letters/{letter}/print', [ LetterController::class,'printLetter' ])->name('letter.print');
     Route::get('letter/{letter}/status',[ LetterController::class,'status'])->name('letter.status');
-    // Route::get('letter/{letterId}/show',[ LetterController::class,'show'])->name('letter.show');
 
-     // Route for letter movement /letter-movements
+    // Route for letter movement /letter-movements
      Route::resource('letter-movements', LetterMovementController::class);
 
-     // for other standard actions
+    // for other standard actions
      Route::resource('letter-movements', LetterMovementController::class)->except(['create', 'edit']);
-     // Define a custom route for recording letter movements
+    // Define a custom route for recording letter movements
      Route::get('letter-movements/{letter}/record-movement', [ LetterMovementController::class,'createMovement'])->name('letter-movements.add');
      Route::post('letter-movements/{letter}/{destinationNode}', [ LetterMovementController::class,'recordMovement'])->name('letter-movements.record');
-
-
-
 });
 
 

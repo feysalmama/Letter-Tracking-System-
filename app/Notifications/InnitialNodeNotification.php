@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Notifiable;
 
-class InnitialNodeNotification extends Notification
+class InnitialNodeNotification extends Notification implements ShouldQueue
 {
     use Queueable,Notifiable;
 

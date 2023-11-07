@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LetterComingNotification extends Notification
+class LetterComingNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -19,10 +19,10 @@ class LetterComingNotification extends Notification
      protected $letter;
     protected $currentNode;
 
-    public function __construct($letter, $currentNode)
+    public function __construct($letter)
     {
         $this->letter = $letter;
-        $this->currentNode = $currentNode;
+        // $this->currentNode = $currentNode;
     }
 
     /**

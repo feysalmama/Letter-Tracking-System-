@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\InnitialNodeNotification;
+use App\Notifications\LetterComingNotification;
 use App\Notifications\LetterAcceptedNotification;
 
 
@@ -77,9 +77,8 @@ class LetterController extends Controller
 
         // Handle file upload
         $file = $request->file('file_path');
-        $fileName = 'letters/' . uniqid() . '.' . $file->getClientOriginalName();
+        $fileName = 'letters/' . uniqid() .'.' . $file->extension();
         $filePath = $file->storeAs('public', $fileName);
-
 
         // Additional data to include in the create method
         $additionalData = [
@@ -114,7 +113,7 @@ class LetterController extends Controller
          // Send the notification to the retrieved email address to initial node user
           $userEmail = $initialNode->user->email;
            $user = User::where('email', $userEmail)->first();
-          Notification::send($user, new InnitialNodeNotification($letter));
+          Notification::send($user, new LetterComingNotification($letter));
 
 
 
@@ -163,24 +162,16 @@ public function show($letter)
 {
       $letter = Letter::findOrFail($letter);
       $filePath = $letter->file_path;
+// dd( $filePath);
 
-    // Retrieve the specific notification linked to the current letter
-     $notification = Auth::user()->unreadNotifications()->where(function ($query) use ($letter) {
-            $query->where('type', 'InitialNodeNotification')->orWhere('type', 'LetterComingNotification')->where('data->letter_id', $letter);
-        })->first();
+         if (Storage::exists($filePath)) {
+            return view('letter.letter.show', compact('filePath'));
+        } else {
+            abort(404); // or handle the case where the file is not found
+        }
 
-    // Mark the specific notification as read
-    if ($notification) {
-        $notification->markAsRead();
-    }
-// dd($letterId);
-    // Retrieve unread notifications of the authenticated user
-    $notifications = Auth::user()->unreadNotifications;
-
-    return view('letter.letter.show', [
-        'filePath' => $filePath
-
-    ]);
+    // return view('letter.letter.show', compact('filePath'));
+    // return response()->file($filePath,['content-Type'=>'application/pdf']);
 }
 
     /**

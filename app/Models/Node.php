@@ -16,6 +16,7 @@ class Node extends Model
         'office_name',    // Office name
         'in_or_out_office', // 1 for "In" and 0 for "Out"
         'zone',           // Zone or city administration
+        'estimated_waiting_time',           // Estimated_waiting_time of letter
         'woreda',         // Woreda (if applicable)
         'user_id'
     ];
@@ -53,6 +54,6 @@ class Node extends Model
         }
         return 1; // Default to 1 if the route is not found
     }
-    
+
 
 }

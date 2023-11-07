@@ -86,7 +86,8 @@ public function store(Request $request)
     }
 
      Notification::send($user, new UserCreatedNotification());
-// $user->notify(new RegistrationSuccessful());
+
+    //  redirect to the index
     return redirect()->route('admin.users.index')->with('message', 'User created.');
 }
 

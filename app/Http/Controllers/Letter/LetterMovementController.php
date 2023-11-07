@@ -40,7 +40,7 @@ class LetterMovementController extends Controller
         return view('letter.letter_movement.createMovement', compact('letter', 'destinationNode'));
     }
 
-        public function recordMovement(Request $request, Letter $letter)
+    public function recordMovement(Request $request, Letter $letter)
     {
         $letterMovements = LetterMovement::all();
         //  Validate the input data
@@ -96,7 +96,7 @@ class LetterMovementController extends Controller
          // Send the notification to the user email associated with the destination node
            $userEmail = $destinationNode->user->email;
            $user = User::where('email', $userEmail)->first();
-          Notification::send($user, new LetterComingNotification($letter, $currentNode));
+          Notification::send($user, new LetterComingNotification($letter ));
 
 
          $customerEmail = $letterMovements->pluck('letter.customer_email')->first();

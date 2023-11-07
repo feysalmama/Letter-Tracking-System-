@@ -17,7 +17,7 @@
                   Total users
               </p>
               <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                  6389
+                  {{ $userCount }}
               </p>
           </div>
       </div>
@@ -35,7 +35,7 @@
                   Letters
               </p>
               <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                  46,760
+                  {{ $letterCount }}
               </p>
           </div>
       </div>
