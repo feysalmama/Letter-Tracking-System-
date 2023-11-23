@@ -32,6 +32,7 @@ Route::get('/', function () {
 
 
 Route::get('/check', [HomeController::class, 'check'])->name('home.check');
+Route::post('/status', [HomeController::class, 'status'])->name('home.status');
 
 Route::get('/dashboard', function () {
     $user = Auth::user();

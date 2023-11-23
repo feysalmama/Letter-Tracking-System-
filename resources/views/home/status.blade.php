@@ -93,66 +93,34 @@
                         <a class="nav-link click-scroll  hover:text-slate-400" href="{{ url('/login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link click-scroll  hover:text-slate-400"
-                            href="{{ route('admin.users.create') }}">Register</a>
+                        <a class="nav-link click-scroll  hover:text-slate-400" href="{{ url('/register') }}">Register</a>
                     </li>
                 @endauth
             @endif
         </div>
     </nav>
 
-    <section class=" bg-teal-800 w-full h-screen ">
-        <div class="flex items-center  pt-24">
-            <p class=" text-teal-400 text-6xl pl-6">"Never Lose Sight of Your Mail:
-                <br> Track Letters Efficiently and Seamlessly"
-            </p>
+
+
+
+
+    <section class=" h-96 flex flex-col justify-center items-center ">
+        <div class="w-2/4 bg-orange-200 p-28 rounded-lg">
+            <h1>Status of your letter</h1>
+            <div>
+                <h1> Letter Status = {{ $status }}</h1>
+                <h3> Current node = lh</h3>
+                <h3>Remaining node = ljk</h3>
+            </div>
         </div>
 
-        <div class="flex justify-center items-center w-full pt-28 gap-8">
-            <div
-                class="flex flex-col items-center justify-center  hover:bg-teal-950 w-96 p-3 border border-teal-950 h-60 rounded-lg bg-trasparent ">
 
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                    stroke="currentColor" class="w-10 h-10 flex items-center justify-center">
-                    <path strokeLinecap="round" strokeLinejoin="round"
-                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                </svg>
-                <a href="#" class=" text-xl font-bold pb-2">HOW IT WORKS</a>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia possimus eum mollitia sunt commodi,
-                    dignissimos delectus labore neque, eligendi fugiat dolor minus, nisi quis ducimus. Itaque aspernatur
-                    veniam molestiae quibusdam!</p>
-            </div>
-            <div
-                class="flex flex-col items-center justify-center  hover:bg-teal-950 w-96 p-3 border border-teal-950 h-60 rounded-lg bg-trasparent ">
-
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-10 h-10">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                </svg>
-
-                <a href="{{ route('home.check') }}" class=" text-xl font-bold pb-2">CHECK STATUS</a>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia possimus eum mollitia sunt commodi,
-                    dignissimos delectus labore neque, eligendi fugiat dolor minus, nisi quis ducimus. Itaque aspernatur
-                    veniam molestiae quibusdam!</p>
-            </div>
-            {{-- <div
-                class="flex flex-col items-center justify-center  hover:bg-teal-950 w-96 p-3 border border-teal-950 h-60 rounded-lg bg-trasparent ">
-
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                    stroke="currentColor" class="w-10 h-10 flex items-center justify-center">
-                    <path strokeLinecap="round" strokeLinejoin="round"
-                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                </svg>
-                <a href="#" class=" text-xl font-bold pb-2"></a>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia possimus eum mollitia sunt commodi,
-                    dignissimos delectus labore neque, eligendi fugiat dolor minus, nisi quis ducimus. Itaque aspernatur
-                    veniam molestiae quibusdam!</p>
-            </div> --}}
-
-        </div>
 
     </section>
+
+
+
+
     <section>
         <div class=" flex items-center justify-center gap-60 w-full h-40 bg-gray-950 ">
             <div>
