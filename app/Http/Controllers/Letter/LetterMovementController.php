@@ -75,7 +75,6 @@ class LetterMovementController extends Controller
 
 
 
-
         // Ensure that the destination node follows the current node.
         if (!$letter->followsNode($destinationNode, $currentNode)) {
             return redirect()->route('letter.letter-movements.index', $letter)->with('error', 'Invalid Destination Node');

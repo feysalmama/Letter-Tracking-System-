@@ -166,8 +166,9 @@
                     <li class="relative">
                         <button class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
                             @click="toggleProfileMenu" aria-label="Account" aria-haspopup="true">
-                            <img class="object-cover w-8 h-8 rounded-full" src="{{ Auth::user()->image }}"
-                                alt="" aria-hidden="true" />
+                            <img class="object-cover w-8 h-8 rounded-full"
+                                src="{{ asset('user/' . Auth()->user()->image) }}" alt=""
+                                aria-hidden="true" />
                         </button>
                         <div x-show="isProfileMenuOpen">
                             <ul x-transition:leave="transition ease-in duration-150"

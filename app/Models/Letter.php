@@ -20,6 +20,8 @@ class Letter extends Model
         'customer_phone',
         'customer_email',
         'customer_address',
+        'letter_title',
+        'status',
         'file_path',
     ];
 

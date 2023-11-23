@@ -1,9 +1,9 @@
-import './bootstrap';
-import './init-alpine';
+import "./bootstrap";
+import "./init-alpine";
 
-
-import Alpine from 'alpinejs';
+import { Carousel, initTE } from "tw-elements";
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
-
+initTE({ Carousel });
 Alpine.start();

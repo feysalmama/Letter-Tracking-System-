@@ -3,6 +3,7 @@ use App\Models\User;
 use App\Models\Letter;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\IndexController;
@@ -26,17 +27,23 @@ use App\Http\Controllers\Letter\LetterMovementController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home.index');
 });
 
 
+Route::get('/check', [HomeController::class, 'check'])->name('home.check');
+
 Route::get('/dashboard', function () {
-  $letterCount = Letter::all()->count();
-  $userCount = User::all()->count();
+    $user = Auth::user();
 
-    return view('dashboard', compact('userCount','letterCount'));
+    if ($user->hasRole('admin')) {
+        $letterCount = Letter::all()->count();
+        $userCount = User::all()->count();
+        return view('dashboard', compact('userCount', 'letterCount'));
+    } else {
+        return view('/home.index');
+    }
 })->middleware(['auth', 'verified'])->name('dashboard');
-
 
 
 

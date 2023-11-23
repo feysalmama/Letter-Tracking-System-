@@ -20,15 +20,17 @@ return new class extends Migration
             $table->string('customer_phone');
             $table->string('customer_email');
             $table->text('customer_address');
+            $table->text('letter_title');
+            $table->enum('status', ['In Progress', 'Completed', 'Pending', 'Cancelled'])->default('In Progress');
             $table->string('file_path');
             $table->unsignedBigInteger('letter_type_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
-            
+
             // Define foreign keys
             $table->foreign('letter_type_id')->references('id')->on('letter_types');
             $table->foreign('user_id')->references('id')->on('users');
-           
+
         });
     }
 

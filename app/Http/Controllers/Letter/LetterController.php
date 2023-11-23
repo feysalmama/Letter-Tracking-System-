@@ -62,6 +62,7 @@ class LetterController extends Controller
             'customer_phone' => 'required|string',
             'customer_email' => 'required|email',
             'customer_address' => 'required|string',
+            'letter_title' => 'required|string',
             'file_path' => 'required|file',
         ]);
 
@@ -203,6 +204,7 @@ public function show($letter)
         'customer_phone' => 'required|string',
         'customer_email' => 'required|email',
         'customer_address' => 'required|string',
+        'letter_title' => 'required|string',
         'file_path' => 'file', //  optional
     ]);
 
