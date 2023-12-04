@@ -27,5 +27,8 @@ class Route extends Model
             ->orderBy('order');  // Order nodes by their position in the route
     }
 
-    
+  public function letterType()
+    {
+        return $this->belongsTo(LetterType::class, 'letter_type_id');
+    }
 }

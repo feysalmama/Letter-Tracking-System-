@@ -75,37 +75,36 @@
                     class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
                     aria-label="submenu">
                     <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                        <a class="w-full" href="{{ route('letter.letter.index') }}">Letter</a>
+                        <a class="w-full" href="{{ route('letter.letter.index') }}">Letters</a>
                     </li>
-                    <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                    {{-- <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                         <a class="w-full" href="{{ route('letter.letter.create') }}">
                             Add new letter
                         </a>
-                    </li>
+        </li> --}}
                     <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                         <a class="w-full" href="{{ route('letter.letter-types.index') }}">
-                            All letter types
+                            Letter types
                         </a>
                     </li>
                     <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                         <a class="w-full" href="{{ route('letter.letter-movements.index') }}">
-                            All letter movements
+                            Letter movements
                         </a>
                     </li>
                     <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                        <a class="w-full" href="{{ route('letter.nodes.index') }}">All nodes</a>
+                        <a class="w-full" href="{{ route('letter.nodes.index') }}">Nodes</a>
                     </li>
+                    {{-- <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+            <a class="w-full" href="{{ route('letter.nodes.create') }}">Add new nodes</a>
+        </li> --}}
                     <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                        <a class="w-full" href="{{ route('letter.nodes.create') }}">Add new nodes</a>
+                        <a class="w-full" href="{{ route('letter.predefined-routes.index') }}">Predefined routes</a>
                     </li>
-                    <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                        <a class="w-full" href="{{ route('letter.predefined-routes.index') }}">All
+                    {{-- <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+            <a class="w-full" href="{{ route('letter.predefined-routes.create') }}">Add
                             predefined routes</a>
-                    </li>
-                    <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                        <a class="w-full" href="{{ route('letter.predefined-routes.create') }}">Add
-                            predefined routes</a>
-                    </li>
+        </li> --}}
                     <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                         <a class="w-full" href="./blank.html">Blank</a>
                     </li>
@@ -142,27 +141,27 @@
                     class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
                     aria-label="submenu">
                     <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                        <a class="w-full" href="{{ route('admin.users.index') }}">All users</a>
+                        <a class="w-full" href="{{ route('admin.users.index') }}">Users</a>
                     </li>
+                    {{-- <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                    <a class="w-full" href="{{ route('admin.users.create') }}">Add new user</a>
+                </li> --}}
                     <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                        <a class="w-full" href="{{ route('admin.users.create') }}">Add new user</a>
+                        <a class="w-full" href="{{ route('admin.roles.index') }}">Roles</a>
                     </li>
-                    <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                        <a class="w-full" href="{{ route('admin.roles.index') }}">All Role</a>
-                    </li>
-                    <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                        <a class="w-full" href="{{ route('admin.roles.create') }}">Add new role</a>
-                    </li>
+                    {{-- <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                    <a class="w-full" href="{{ route('admin.roles.create') }}">Add new role</a>
+                </li> --}}
                     <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                         <a class="w-full" href="{{ route('admin.permissions.index') }}">
-                            All permissions
+                            Permissions
                         </a>
                     </li>
-                    <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                        <a class="w-full" href="{{ route('admin.permissions.create') }}">
+                    {{-- <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                    <a class="w-full" href="{{ route('admin.permissions.create') }}">
                             Add new permission
                         </a>
-                    </li>
+                </li> --}}
 
 
                 </ul>

@@ -58,6 +58,7 @@ public function store(Request $request)
             'password' => 'required|min:8|confirmed', // Add the 'confirmed' rule
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'role' => 'required|in:user,office', // Make sure you include 'role' in the form.
+            'role_with_department' => 'required',
             'department_id' => 'required'
         ]);
 
@@ -120,6 +121,7 @@ public function update(Request $request, User $user)
         'birth_date' => 'date|nullable',
         'phone' => 'string|max:20|nullable',
         'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048|nullable',
+         'role_with_department' => 'required',
          'department_id' => 'required'
     ]);
 
