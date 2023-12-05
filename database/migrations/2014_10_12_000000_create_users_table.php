@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->string('role_with_department')->nullable();
 
         });
     }

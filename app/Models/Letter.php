@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Route;
 use App\Models\LetterType;
 use App\Models\LetterMovement;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Route;
 
 class Letter extends Model
 {
@@ -43,10 +44,9 @@ class Letter extends Model
     }
 
 
-
  // Function to get the initial node for the letter
- public function getInitialNode()
- {
+     public function getInitialNode()
+    {
      $letterType = $this->letterType;
 
      if ($letterType) {
@@ -63,7 +63,7 @@ class Letter extends Model
      }
 
      return null;
- }
+    }
 
 
     public function getCurrentNode()
@@ -79,7 +79,7 @@ class Letter extends Model
 
             // Load the node with the pivot data for 'order'
             $currentNode = Node::with(['routes' => function ($query) use ($currentNodeId) {
-                $query->where('node_route.node_id', $currentNodeId); // Assuming the pivot table is named 'node_route'
+                $query->where('node_route.node_id', $currentNodeId);
             }])
             ->where('id', $currentNodeId)
             ->first();
@@ -97,7 +97,7 @@ class Letter extends Model
     }
 
 
-        public function getDestinationNode()
+    public function getDestinationNode()
     {
         // Get the current node using the getCurrentNode method
         $currentNode = $this->getCurrentNode();
@@ -146,4 +146,25 @@ class Letter extends Model
         // Ensure that the destination node follows the current node in the route.
         return $destinationOrder > $currentOrder;
     }
+
+
+    public function countNodesInRoute()
+   {
+     $letterType = $this->letterType;
+
+     if ($letterType) {
+        $routeId = $letterType->routes->first()->id;
+        if ($routeId) {
+            $nodeCount = DB::table('node_route')
+                ->whereIn('route_id', [$routeId])
+                ->distinct('node_id')
+                ->count('node_id');
+
+            return $nodeCount;
+        }
+      }
+
+    return 0;
+   }
+
 }

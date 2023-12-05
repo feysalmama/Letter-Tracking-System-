@@ -15,10 +15,10 @@ class LetterType extends Model
 
         'name',
         'description',
-      
+
     ];
 
-    public function routes()
+public function routes()
 {
     return $this->hasMany(Route::class);
 }

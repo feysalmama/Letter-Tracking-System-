@@ -64,6 +64,8 @@
                                                             text-sm">{{ $message }}</span>
                                                         @enderror
                                                     </div>
+
+
                                                     <div>
                                                         <label for="phone"
                                                             class="block mb-2 text-sm font-medium text-gray-900">Phone
@@ -76,6 +78,8 @@
                                                             <span class="text-red-400 text-sm">{{ $message }}</span>
                                                         @enderror
                                                     </div>
+
+
                                                     <div>
                                                         <label for="last_name"
                                                             class="block mb-2 text-sm font-medium text-gray-900 ">Last
@@ -101,9 +105,11 @@
                                                             <span class="text-red-400 text-sm">{{ $message }}</span>
                                                         @enderror
                                                     </div>
+
+
                                                     <div class="mb-6">
                                                         <label for="department_id"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
+                                                            class="block mb-2 text-sm font-medium text-gray-900 ">Select
                                                             Department
                                                         </label>
 
@@ -115,6 +121,22 @@
                                                                     {{ $user->department_id == $department->id ? 'selected' : '' }}>
                                                                     {{ $department->name }}</option>
                                                             @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <label for="role_with_department"
+                                                            class="block text-sm font-medium text-gray-700">Status:</label>
+                                                        <select id="role_with_department" name="role_with_department"
+                                                            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                            <option value="Manager">Manager</option>
+                                                            <option value="Assistant Manager">Assistant Manager</option>
+                                                            <option value="Director">Director</option>
+                                                            <option value="Supervisor">Supervisor</option>
+                                                            <option value="Specialist">Specialist</option>
+                                                            <option value="Analyist">Analyist</option>
+                                                            <option value="Coordinator">Coordinator</option>
+                                                            <option value="staff">staff</option>
                                                         </select>
                                                     </div>
 

@@ -47,7 +47,7 @@ class NodeController extends Controller
             'office_name' => 'required|string',
             'in_or_out_office' => 'boolean',
            'zone' => 'required|string',
-            'estimated_waiting_time' => 'required|integer',
+            'estimated_waiting_time' => 'required|numeric|min:1',
             'woreda' => 'string|nullable',
             'route_ids' => 'array|exists:routes,id',
             'user_id' => 'required|exists:users,id', // Ensure that a user is selected
@@ -106,7 +106,7 @@ class NodeController extends Controller
                 'office_name' => 'required|string',
                 'in_or_out_office' => 'boolean|nullable',
                 'zone' => 'required|string',
-                'estimated_waiting_time' => 'required|integer',
+                'estimated_waiting_time' => 'required|numeric|min:1',
                 'woreda' => 'required|string',
                 'route_ids' => 'array|exists:routes,id',
             ]);

@@ -107,6 +107,9 @@
                 <div class="space-y-8 divide-y divide-gray-200 w-2/4 mt-10">
                     <h1 class=" bg-gray-900 font-bold h-12 p-2 text-white rounded-sm">Enter your secret code </h1>
 
+
+
+
                     <form method="POST" action="{{ route('home.status') }}">
                         @csrf
                         <div class=" gap-6 mb-6 shadow-lg p-6">

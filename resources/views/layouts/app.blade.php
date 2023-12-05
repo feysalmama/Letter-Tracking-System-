@@ -129,8 +129,9 @@
                                                 <span>{{ $notification->data['message'] }}</span>
                                                 <small>{{ $notification->created_at->diffForHumans() }}</small>
                                             @elseif ($notification->type === 'App\Notifications\LetterComingNotification')
-                                                <a href="{{ route('letter.letter.show', ['letter' => $notification->data['letter_id']]) }}"
+                                                <a href="{{ route('letter.letter-movements.add', ['letter' => $notification->data['letter_id']]) }}"
                                                     class="items-center  w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+                                                    {{-- {{ route('letter.letter.show', ['letter' => $notification->data['letter_id']]) }} --}}
                                                     <span>{{ $notification->data['message'] }}</span>
                                                     <small>{{ $notification->created_at->diffForHumans() }}</small>
                                                 </a>
@@ -146,7 +147,7 @@
                                                 <span>{{ $notification->data['message'] }}</span>
                                                 <small>{{ $notification->created_at->diffForHumans() }}</small>
                                             @elseif ($notification->type === 'App\Notifications\LetterComingNotification')
-                                                <a href="{{ route('letter.letter.show', ['letter' => $notification->data['letter_id']]) }}"
+                                                <a href="{{ route('letter.letter-movements.add', ['letter' => $notification->data['letter_id']]) }}"
                                                     class="items-center  w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200">
                                                     <span>{{ $notification->data['message'] }}</span>
                                                     <small>{{ $notification->created_at->diffForHumans() }}</small>

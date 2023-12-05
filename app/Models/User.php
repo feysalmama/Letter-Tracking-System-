@@ -29,6 +29,7 @@ class User extends Authenticatable
         'birth_date',
         'phone',
         'image',
+        'role_with_department',
         'department_id'
     ];
 

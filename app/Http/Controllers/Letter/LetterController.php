@@ -155,25 +155,26 @@ class LetterController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-//      public function show($letterId)
-// {
 
 
-public function show($letter)
+public function show( $letter)
 {
       $letter = Letter::findOrFail($letter);
       $filePath = $letter->file_path;
-// dd( $filePath);
 
-         if (Storage::exists($filePath)) {
-            return view('letter.letter.show', compact('filePath'));
-        } else {
-            abort(404); // or handle the case where the file is not found
+        $destinationNode = $letter->getDestinationNode()->name;
+        //   dd( $destinationNode);
+
+
+        if (!$destinationNode) {
+            return redirect()->route('letter.letter.show')->with('error', 'Invalid Destination Node');
         }
 
-    // return view('letter.letter.show', compact('filePath'));
-    // return response()->file($filePath,['content-Type'=>'application/pdf']);
-}
+
+       return view('letter.letter.show', compact('letter', 'destinationNode','filePath'));
+     // return view('letter.letter.show', compact('filePath'));
+     // return response()->file($filePath,['content-Type'=>'application/pdf']);
+    }
 
     /**
      * Show the form for editing the specified resource.

@@ -12,6 +12,37 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+    {{-- <style>
+        /* .node {
+            position: relative;
+        }
+
+        .circle {
+            position: relative;
+            z-index: 1;
+        } */
+
+        .line {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 2px;
+            background-color: rgb(189, 42, 42);
+        }
+
+        .circle:not(:last-child) .line::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            transform: translateY(-50%);
+            width: 80px;
+            /* Adjust the width as needed */
+            height: 2px;
+            background-color: rgb(116, 25, 25);
+        }
+    </style> --}}
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -101,25 +132,43 @@
     </nav>
 
 
+    <section class=" h-screen flex flex-col justify-center items-center ">
 
+        <div class="flex pb-20">
+            @foreach ($nodes as $index => $node)
+                @php
+                    $movement = $letter->movements->where('node_id', $node->id)->first();
+                @endphp
+                <div class="node flex items-center">
+                    <div
+                        class=" w-14 h-14 rounded-full pl-2 pt-4 text-sm {{ $movement ? ($movement->status === 'Completed' ? 'bg-green-500' : 'bg-yellow-500') : 'bg-gray-500' }}">
+                        {{ $node->name }}
+                    </div>
+                    @if (!$loop->last)
+                        <span class="h-1 w-20 bg-black"></span>
+                    @endif
+                </div>
+            @endforeach
+        </div>
 
-
-    <section class=" h-96 flex flex-col justify-center items-center ">
-        <div class="w-2/4 bg-orange-200 p-28 rounded-lg">
-            <h1>Status of your letter</h1>
-            <div>
-                <h1> Letter Status = {{ $status }}</h1>
-                <h3> Current node = lh</h3>
-                <h3>Remaining node = ljk</h3>
+        <div class="w-2/4 bg-orange-200 p-6 rounded-lg">
+            <h1 class=" p-4 text-center font-bold text-xl">Status of your letter</h1>
+            <div class="pl-10">
+                <h3> <strong>Available nodes in the route : </strong>{{ $countNode }} Nodes.</h3>
+                <h1> <strong>Letter Status :</strong> {{ $status }}</h1>
+                <h1 class=" font-extrabold  pt-2 "> Current node </h1>
+                <div class=" pl-10">
+                    <h3> <strong>Office name:</strong> {{ $currentNode->office_name }}</h3>
+                    <h3> <strong>Estimated waiting time:</strong> {{ $currentNode->estimated_waiting_time }} Day</h3>
+                    <h3> <strong>Office director:</strong> {{ $currentNode->name }}</h3>
+                    <h3> <strong>Zone:</strong> {{ $currentNode->zone }}</h3>
+                    <h3> <strong>Woreda:</strong> {{ $currentNode->woreda }}</h3>
+                </div>
             </div>
         </div>
 
 
-
     </section>
-
-
-
 
     <section>
         <div class=" flex items-center justify-center gap-60 w-full h-40 bg-gray-950 ">

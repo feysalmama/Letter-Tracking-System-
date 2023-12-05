@@ -6,23 +6,21 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Notifiable;
 
-class InnitialNodeNotification extends Notification implements ShouldQueue
+class ProcessCompletedNotification extends Notification implements ShouldQueue
 {
-    use Queueable,Notifiable;
+    use Queueable;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-        protected $letter;
-
-     public function __construct($letter)
+     protected $letter;
+    public function __construct($letter)
     {
         $this->letter = $letter;
-        //  $notifiableName = $this->getNotifiableName($notifiable);
+        //
     }
 
     /**
@@ -33,7 +31,7 @@ class InnitialNodeNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail','database'];
+        return ['mail'];
     }
 
     /**
@@ -42,19 +40,15 @@ class InnitialNodeNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-      public function toMail($notifiable)
+    public function toMail($notifiable)
     {
-        $letterTitle = $this->letter->title;
-        $userName = $notifiable->name;
-
-        return (new MailMessage)
-            ->subject('New Letter Received')
-            ->greeting('Hello, ' . $userName)
-            ->line('A new letter titled "' . $letterTitle . '" has been received.')
-            ->line('Please review the letter and take the necessary actions.')
+         $letterTitle = $this->letter->title;
+            return (new MailMessage)
+            ->subject('Your letter journey Completed.')
+            ->greeting('Hello,')
+            ->line('Your letter titled journey is completed')
             ->line('Thank you for using our letter tracking system.');
     }
-
 
     /**
      * Get the array representation of the notification.
@@ -62,11 +56,10 @@ class InnitialNodeNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-     public function toDatabase($notifiable)
+    public function toArray($notifiable)
     {
-    return [
-        'message' => 'New letter recieved',
-        'letter_id' => $this->letter->id,
-    ];
+        return [
+            //
+        ];
     }
 }
