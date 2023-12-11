@@ -18,7 +18,7 @@
 
 <body>
 
-    <div class=" h-96 w-full mx-auto px-15  ">
+    <div class="min-h-screen w-full mx-auto px-15 bg-white dark:bg-gray-900 ">
 
 
         <nav class="bg-white border-gray-200 dark:bg-gray-900 fixed top-0 w-full z-50">
@@ -76,11 +76,11 @@
             class="bg-white dark:bg-gray-900  flex flex-col lg:flex-row  items-center justify-items gap-8  min-h-screen  mx-auto mt-10 sm:my-20 px-20">
             <div class=" flex-row w-full md:w-1/2  space-y-5 items-center justify-items">
                 <span class="text-sm text-light dark:text-slate-200">Letter Tracking System Enhancement</span>
-                <div class="text-7xl text-bold ">
+                <div class="text-7xl text-bold  dark:text-slate-200 ">
                     Craft an Exceptional Letter Tracking Experience.
 
                 </div>
-                <div>
+                <div class=" dark:text-slate-200">
 
                     We convert leads into satisfied customers through impactful strategies.
                 </div>
@@ -97,23 +97,20 @@
 
         </div>
         <div class="flex-col items-center justify-center mt-10 mb-20 ">
-
-
-            <div class="text-center text-3xl font-bold mb-4">System Overview</div>
+            <div class="text-center text-4xl font-bold dark:text-slate-200  mb-4 sm:mb-12">System Overview</div>
             <div
                 class="bg-white dark:bg-gray-900  flex flex-col md:flex-row  items-center justify-items gap-8    mx-auto px-20">
                 <div class=" flex-row w-full md:w-1/2  space-y-5 items-center justify-items">
-                    {{--  --}}
                     <div
-                        class="flex flex-col items-center justify-center  hover:bg-gray-100  p-3 border border-gray-100 h-72 rounded-lg bg-trasparent ">
+                        class="flex flex-col items-center justify-center  hover:bg-gray-100 dark:hover:bg-slate-800 dark:hover:text-slate-200 p-3 border border-gray-100 h-72 rounded-lg bg-trasparent ">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                             stroke="currentColor" class="w-10 h-10 flex items-center justify-center">
                             <path strokeLinecap="round" strokeLinejoin="round"
                                 d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                         </svg>
-                        <a href="#" class=" text-xl font-bold pb-2">HOW IT WORKS</a>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia possimus eum mollitia sunt
+                        <a href="#" class=" text-xl font-bold pb-2  dark:text-slate-200">HOW IT WORKS</a>
+                        <p class=" dark:text-slate-200">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia possimus eum mollitia sunt
                             commodi,
                             dignissimos delectus labore neque, eligendi fugiat dolor minus, nisi quis ducimus. Itaque
                             aspernatur
@@ -123,7 +120,7 @@
 
                 <div class="w-full md:w-1/2 mt-4 md:mt-0">
                     <div
-                        class="flex flex-col items-center justify-center  hover:bg-gray-100  p-3 border border-gray-100 h-72 rounded-lg bg-trasparent ">
+                        class="flex flex-col items-center justify-center  hover:bg-gray-100 dark:hover:bg-slate-800  p-3 border border-gray-100 h-72 rounded-lg bg-trasparent ">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-10 h-10">
@@ -131,8 +128,8 @@
                                 d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                         </svg>
 
-                        <a href="{{ route('home.check') }}" class=" text-xl font-bold pb-2">CHECK STATUS</a>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia possimus eum mollitia sunt
+                        <a href="{{ route('home.check') }}" class=" text-xl font-bold  dark:text-slate-200 pb-2">CHECK STATUS</a>
+                        <p class=" dark:text-slate-200">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia possimus eum mollitia sunt
                             commodi,
                             dignissimos delectus labore neque, eligendi fugiat dolor minus, nisi quis ducimus. Itaque
                             aspernatur
@@ -144,7 +141,7 @@
 
 
 
-        <footer class="text-center mt-auto p-4 text-gray-700">
+        <footer class="text-center mt-auto p-4 text-gray-700 dark:text-slate-200">
             <p>&copy; {{ now()->year }} Your Company Name. All rights reserved.</p>
         </footer>
 
