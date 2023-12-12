@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Models\Department;
+use App\Rules\NotInFutureDate; 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
@@ -50,7 +51,7 @@ public function store(Request $request)
             'last_name' => 'required',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required',
-            'birth_date' => 'required',
+            'birth_date' => ['required', new NotInFutureDate ],
             'password' => 'required|min:8|confirmed', // Add the 'confirmed' rule
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'role' => 'required|in:user,office', // Make sure you include 'role' in the form.
