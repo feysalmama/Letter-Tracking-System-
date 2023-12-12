@@ -53,7 +53,7 @@
                   Approved Letters
               </p>
               <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                  376
+                  {{ $letterApprovedCount }}
               </p>
           </div>
       </div>
@@ -71,7 +71,7 @@
                   Pending Letters
               </p>
               <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                  35
+                  {{ $letterPendingCount }}
               </p>
           </div>
       </div>

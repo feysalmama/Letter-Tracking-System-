@@ -13,6 +13,7 @@ use App\Notifications\LetterComingNotification;
 use App\Notifications\ProcessCompletedNotification;
 use App\Notifications\LetterProgressingNotification;
 use App\Notifications\delayLetterWarningNotification;
+use App\Notifications\LetterPendingOrCancelledNotification;
 
 class LetterMovementController extends Controller
 {
@@ -31,36 +32,20 @@ class LetterMovementController extends Controller
     }
     public function createMovement(Letter $letter)
     {
-        // Get the destination node using the special function in the Letter model
-        $destinationNode = $letter->getDestinationNode();
+         $authUser = auth()->user();
+       // Get the destination node using the special function in the Letter model
+       $destinationNode = $letter->getDestinationNode();
+       $getCurrentNode = $letter->getCurrentNode();
 
-
-        if (!$destinationNode) {
+     if (!$destinationNode) {
             return redirect()->route('letter.letter-movements.index')->with('error', 'Invalid Destination Node');
         }
 
 
-        return view('letter.letter_movement.createMovement', compact('letter', 'destinationNode'));
-    }
-    // public function createMovement(Letter $letter)
-    // {
-    //     // Get the destination node using the special function in the Letter model
-    //     $destinationNode = $letter->getDestinationNode();
-    //     $getCurrentNode = $letter->getCurrentNode();
-    //      dd($getCurrentNode->id);
-    //     // $letterMovements = LetterMovement::all();
+        return view('letter.letter_movement.createMovement', compact('letter', 'destinationNode','getCurrentNode','authUser'));
+}
 
 
-    //     $filePath = $letter->file_path;
-
-
-    //     if (!$destinationNode) {
-    //         return redirect()->route('letter.letter-movements.index')->with('error', 'Invalid Destination Node');
-    //     }
-
-
-    //     return view('letter.letter_movement.createMovement', compact('letter', 'destinationNode','filePath'));
-    // }
 
     public function recordMovement(Request $request, Letter $letter)
     {
@@ -68,6 +53,7 @@ class LetterMovementController extends Controller
         //  Validate the input data
         $status = $request->validate([
             'status' => 'required|in:In Progress,Completed,Pending,Rejected',
+            'reason' => 'required_if:status,Cancelled,Pending',
         ]);
 
         // Calculate the destination node using the helper method
@@ -87,6 +73,8 @@ class LetterMovementController extends Controller
         if ($currentNode->id === $destinationNode->id) {
             // If the current node is the last node, update its status and return without creating a new movement record.
             $latestMovement->update(['status' => $status['status']]);
+
+
 
             // notifiy the Customer if the journey of the letter is completed
          $customerEmail = $letterMovements->pluck('letter.customer_email')->first();
@@ -109,13 +97,16 @@ class LetterMovementController extends Controller
             return redirect()->route('letter.letter-movements.index', $letter)->with('error', 'Invalid Destination Node');
         }
 
+
+        // create movement if the status of the current node is only completed
+
+        if($latestMovement->status === "Completed" ){
         // Create a new movement record with "In Progress" status.
         $movement = new LetterMovement([
             'movement_date' => now(),
             'status' => 'In Progress', // Use the validated status from the request
         ]);
-
-        // Use the relationships to associate the letter and destination node.
+                // Use the relationships to associate the letter and destination node.
            $movement->letter()->associate($letter);
            $movement->node()->associate($destinationNode);
 
@@ -126,11 +117,23 @@ class LetterMovementController extends Controller
            $user = User::where('email', $userEmail)->first();
           Notification::send($user, new LetterComingNotification($letter ));
 
-
-         $customerEmail = $letterMovements->pluck('letter.customer_email')->first();
+        $customerEmail = $letterMovements->pluck('letter.customer_email')->first();
 
         if ($customerEmail) {
           Notification::route('mail', $customerEmail)->notify(new LetterProgressingNotification($letter, $currentNode, $destinationNode));
+        }
+
+        } else{
+        if ($latestMovement['status'] === 'Cancelled' || $latestMovement['status'] === 'Pending') {
+           $latestMovement->reason = $status['reason'];
+          }
+         $latestMovement->save();
+
+
+         if($latestMovement->reason){
+            $customerEmail = $letterMovements->pluck('letter.customer_email')->first();
+            Notification::send($customerEmail, new LetterPendingOrCancelledNotification($letter,$currentNode ));
+           }
         }
 
         return redirect()->route('letter.letter-movements.index')->with('success', 'Movement recorded successfully.');
@@ -168,11 +171,11 @@ public function delayLetterWarning()
      $managerEmails = User::where('department_id', $departmentId)->where('role_with_department', 'Manager')->pluck('email');
     // dd($managerEmails);
 
-         try {
-    Notification::route('mail', $managerEmails)->notify(new LetterProgressingNotification($letter, $currentNode));
-     } catch (\Exception $e) {
+      // Trigger the DelayedLetterEvent event
+                event(new DelayedLetterEvent($letter, $managerEmails, $currentNode));
 
-     };
+
+    // Notification::route('mail', $managerEmails)->notify(new delayLetterWarningNotification($letter, $currentNode));
 
    }
 }

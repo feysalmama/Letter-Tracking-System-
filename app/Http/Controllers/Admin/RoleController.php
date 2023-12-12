@@ -14,7 +14,7 @@ class RoleController extends Controller
     {
         $roles = Role::orderBy('created_at', 'desc')->paginate(5);
         // $roles = Role::paginate(5);
-        
+
         $permissions = Permission::all();
          $user = Auth::user();
           return view('admin.roles.index', compact("roles","user","permissions"));
@@ -30,6 +30,7 @@ class RoleController extends Controller
 
 public function store(Request $request, Role $role)
 {
+     $roles = Role::all();
     $validatedData = $request->validate([
         'name' => 'required|string',
         'permissions' => 'nullable|array',
@@ -43,9 +44,9 @@ public function store(Request $request, Role $role)
         $role->permissions()->sync($permissions);
     }
 
-    $roles = Role::all();
 
-    return view('admin.roles.index', compact('roles'));
+
+    return view('admin.roles.index', compact('roles'))->with('success', 'Role created successfully.');
 }
 
 
@@ -64,32 +65,32 @@ public function update(Role $role, Request $request)
 
     $roles = Role::all(); // Retrieve all roles
 
-    return view('admin.roles.index', compact('roles'));
+    return view('admin.roles.index', compact('roles'))->with('success', 'Role updated successfully.');
 }
 
 
 public function destroy(Role $role)
     {
         $role->delete();
-        return back();
+        return back()->with('success', 'Role deleted successfully.');
 
     }
 
      public function givePermission(Request $request, Role $role)
     {
         if($role->hasPermissionTo($request->permission)){
-            return back()->with('message', 'Permission exists.');
+            return back()->with('success', 'Permission exists.');
         }
         $role->givePermissionTo($request->permission);
-        return back()->with('message', 'Permission added.');
+        return back()->with('success', 'Permission added.');
     }
 
     public function revokePermission(Role $role, Permission $permission)
     {
         if($role->hasPermissionTo($permission)){
             $role->revokePermissionTo($permission);
-            return back()->with('message', 'Permission revoked.');
+            return back()->with('success', 'Permission revoked.');
         }
-        return back()->with('message', 'Permission not exists.');
+        return back()->with('success', 'Permission not exists.');
     }
 }

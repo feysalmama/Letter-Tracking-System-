@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // e.g., "Route A"
-            $table->integer('estimated_waiting_time'); // in minutes
+            // $table->integer('estimated_waiting_time'); // in minutes
             $table->string('office_name'); // Name of the office or point of interaction
             $table->boolean('in_or_out_office')->default('0'); // 1 for "In" and 0 for "Out"
             $table->string('zone')->nullable(); // Zone or city administration

@@ -20,7 +20,7 @@
                         </div>
                         <div class="w-1/2 ">
                             <textarea name="description" cols="30" rows="10"
-                                class="outline text-gray-200 italic outline-blue-300 outline-1 w-full rounded-md"
+                                class="outline text-gray-900 italic outline-blue-300 outline-1 w-full rounded-md"
                                 placeholder="Insert one line description ..."></textarea>
                         </div>
                         <div class=" flex gap-2 m-2">

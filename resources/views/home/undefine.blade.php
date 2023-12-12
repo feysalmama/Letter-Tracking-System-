@@ -102,54 +102,12 @@
         </div>
     </nav>
 
-    @if ($letter->status != 'Completed')
-        <section class=" h-screen flex flex-col justify-center items-center ">
-
-            <div class="flex pb-20">
-                @foreach ($nodes as $node)
-                    @php
-                        $movement = $letter->movements->where('node_id', $node->id)->first();
-                    @endphp
-                    <div class="node flex items-center">
-                        <div
-                            class=" w-14 h-14 rounded-full pl-2 pt-4 text-sm {{ $movement ? ($movement->status === 'Completed' ? 'bg-green-500' : 'bg-yellow-500') : 'bg-gray-500' }}">
-                            {{ $node->name }}
-                        </div>
-                        @if (!$loop->last)
-                            <span class="h-1 w-20 bg-black"></span>
-                        @endif
-                    </div>
-                @endforeach
-            </div>
-
-            <div class="w-2/4 bg-orange-200 p-6 rounded-lg">
-                <h1 class=" p-4 text-center font-bold text-xl">Status of your letter</h1>
-                <div class="pl-10">
-                    <h3> <strong>Available nodes in the route : </strong>{{ $countNode }} Nodes.</h3>
-                    <h1> <strong>Letter Status :</strong> {{ $status }}</h1>
-                    <h1 class=" font-extrabold  pt-2 "> Current node </h1>
-                    <div class=" pl-10">
-                        <h3> <strong>Office name:</strong> {{ $currentNode->office_name }}</h3>
-                        <h3> <strong>Estimated waiting time:</strong> {{ $currentNode->estimated_waiting_time }} Day
-                        </h3>
-                        <h3> <strong>Office director:</strong> {{ $currentNode->name }}</h3>
-                        <h3> <strong>Zone:</strong> {{ $currentNode->zone }}</h3>
-                        <h3> <strong>Woreda:</strong> {{ $currentNode->woreda }}</h3>
-                    </div>
-                </div>
-            </div>
+    <div
+        class="bg-gradient-to-t from-blue-500 to-purple-950 h-screen flex flex-col justify-center items-center text-6xl ">
+        <p>This letter no longer exists in our database..</p>
+    </div>
 
 
-        </section>
-    @else
-        <div
-            class="bg-gradient-to-t from-blue-500 to-purple-950 h-screen flex flex-col justify-center items-center text-6xl ">
-            <p>Your letter progress is completed.</p>
-
-            <p>Thank you for using our platform!</p>
-        </div>
-
-    @endif
     <section>
         <div class=" flex items-center justify-center gap-60 w-full h-40 bg-gray-950 ">
             <div>

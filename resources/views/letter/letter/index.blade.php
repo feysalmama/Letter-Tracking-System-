@@ -33,11 +33,6 @@
 
                                     @foreach ($letters as $letter)
                                         <tr class="border-b border-gray-200 hover:bg-gray-400">
-
-
-
-
-
                                             <td class="py-3 px-6 text-left dark:text-white">
                                                 <span>{{ $letter->unique_code }}</span>
                                             </td>
@@ -113,11 +108,7 @@
                                                             </div>
                                                         </button>
                                                     </form>
-
-
                                                 </div>
-
-
                                             </td>
                                         </tr>
                                     @endforeach
@@ -130,8 +121,4 @@
             </div>
         </div>
     </div>
-
-
-
-
 </x-app-layout>

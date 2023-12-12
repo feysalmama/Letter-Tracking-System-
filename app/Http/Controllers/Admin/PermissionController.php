@@ -26,7 +26,7 @@ class PermissionController extends Controller
 
         Permission::create($validated);
 
-        return to_route('admin.permissions.index')->with('message', 'Permission created.');
+        return to_route('admin.permissions.index')->with('success', 'Permission created Successfully.');
     }
 
     public function edit(Permission $permission)
@@ -40,33 +40,33 @@ class PermissionController extends Controller
         $validated = $request->validate(['name' => 'required']);
         $permission->update($validated);
 
-        return to_route('admin.permissions.index')->with('message', 'Permission updated.');
+        return to_route('admin.permissions.index')->with('success', 'Permission updated Successfully.');
     }
 
     public function destroy(Permission $permission)
     {
         $permission->delete();
 
-        return back()->with('message', 'Permission deleted.');
+        return back()->with('success', 'Permission deleted Successfully.');
     }
 
     public function assignRole(Request $request, Permission $permission)
     {
         if ($permission->hasRole($request->role)) {
-            return back()->with('message', 'Role exists.');
+            return back()->with('error', 'Role exists.');
         }
 
         $permission->assignRole($request->role);
-        return back()->with('message', 'Role assigned.');
+        return back()->with('success', 'Role assigned.');
     }
 
     public function removeRole(Permission $permission, Role $role)
     {
         if ($permission->hasRole($role)) {
             $permission->removeRole($role);
-            return back()->with('message', 'Role removed.');
+            return back()->with('success', 'Role removed.');
         }
 
-        return back()->with('message', 'Role not exists.');
+        return back()->with('error', 'Role not exists.');
     }
 }

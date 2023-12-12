@@ -131,7 +131,7 @@
                                             @elseif ($notification->type === 'App\Notifications\LetterComingNotification')
                                                 <a href="{{ route('letter.letter-movements.add', ['letter' => $notification->data['letter_id']]) }}"
                                                     class="items-center  w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200">
-                                                    {{-- {{ route('letter.letter.show', ['letter' => $notification->data['letter_id']]) }} --}}
+
                                                     <span>{{ $notification->data['message'] }}</span>
                                                     <small>{{ $notification->created_at->diffForHumans() }}</small>
                                                 </a>
@@ -240,16 +240,22 @@
                     @endif
                 </div>
             </header>
+
+
+
             <main class="h-full pb-16 overflow-y-auto">
                 <div class="container px-6 mx-auto grid">
-                    <main>
-                        {{ $slot }}
-                    </main>
-
                     @if (session('success'))
-                        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
-                            <p class="font-bold">Success!</p>
-                            <p>{{ session('success') }}</p>
+                        <div class=" flex justify-between bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-8"
+                            role="alert">
+                            <div>
+                                <p class="font-bold">Success!</p>
+                                <p>{{ session('success') }}</p>
+                            </div>
+
+
+                            <button onclick="this.parentElement.remove()" type="button"
+                                class=" text-green-700 px-4 py-3">X</button>
                         </div>
                     @endif
                     @if (session('error'))
@@ -258,6 +264,11 @@
                             <p>{{ session('error') }}</p>
                         </div>
                     @endif
+                    <main>
+                        {{ $slot }}
+                    </main>
+
+
 
                 </div>
             </main>

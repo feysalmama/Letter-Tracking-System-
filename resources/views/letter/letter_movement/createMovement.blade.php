@@ -51,7 +51,8 @@
             @csrf
 
             <div class="mb-4">
-                <label for="destinationNode" class="block text-sm font-medium text-gray-700">Destination Node:</label>
+                <label for="destinationNode" class="block text-sm font-medium text-gray-700">Destination
+                    Node:</label>
                 <input type="text" id="destinationNode" value="{{ $destinationNode->name }}" class="form-input"
                     disabled>
             </div>
@@ -59,7 +60,7 @@
             <div class="mb-4">
                 <label for="status" class="block text-sm font-medium text-gray-700">Status:</label>
                 <select id="status" name="status" class="form-select"
-                    x-on:change="showReason = $event.target.value === 'Cancelled'" required>
+                    x-on:change="showReason = ['Cancelled', 'Pending'].includes($event.target.value)" required>
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
                     <option value="Pending">Pending</option>
@@ -68,15 +69,17 @@
             </div>
 
             <div class="mb-4" x-show="showReason">
-                <label for="reason" class="block text-sm font-medium text-gray-700">Reason for Cancellation:</label>
+                <label for="reason" class="block text-sm font-medium text-gray-700"> What is the reason?</label>
                 <input type="text" id="reason" name="reason" class="form-input">
             </div>
 
             <button type="submit"
-                class="bg-blue-500 hover-bg-blue-700 text-white font-bold py-2 px-4 rounded focus-outline-none focus-shadow-outline-blue active-bg-blue-800">
+                class="bg-blue-500 hover-bg-blue-700 text-white font-bold py-2 px-4 rounded focus-outline-none focus-shadow-outline-blue active-bg-blue-800"
+                {{ $getCurrentNode->user_id !== $authUser->id ? 'disabled' : '' }}>
                 Record Movement
             </button>
         </form>
+
 
     </div>
 

@@ -38,7 +38,7 @@ public function update(Department $department, Request $request)
     $departments = Department::all();
     $department->refresh();
 
-    return view('admin.departments.index', compact('departments'));
+    return view('admin.departments.index', compact('departments'))->with('success', 'departments created.');
 }
 
     public function store(Request $request)
@@ -50,12 +50,12 @@ public function update(Department $department, Request $request)
 
         Department::create($validated);
 
-        return to_route('admin.departments.index')->with('message', 'departments created.');
+        return to_route('admin.departments.index')->with('success', 'departments updated.');
     }
     public function destroy(Department $department)
     {
         $department->delete();
-        return back();
+        return back()->with('success', 'departments updated.');
 
     }
 

@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\UserCreatedNotification;
-// use App\Notifications\RegistrationSuccessful;
-// use Illuminate\Support\Facades\Notification;
 
 class UserController extends Controller
 {
@@ -21,22 +19,20 @@ public function index(Request $request)
 {
 
       $departments = Department::all();
-        $query = $request->input('query');
+      $users = User::all();
 
-       $query = htmlspecialchars(strip_tags($query));
+    //     $query = $request->input('query');
 
-       $users = User::where(function($q) use ($query) {
-           $q->where('first_name', 'like', "%$query%")
-             ->orWhere('middle_name', 'like', "%$query%")
-             ->orWhere('last_name', 'like', "%$query%");
-       }) ->orderBy('created_at', 'desc')->paginate(5);
 
-          // Set the profile_image_path attribute for each user
-      $users->each(function ($user) {
-        $user->profile_image_path = $user->image
-            ? asset('user/' . $user->image)
-            : asset('user/default.jpg');
-    });
+    //    $query = htmlspecialchars(strip_tags($query));
+
+    //    $users = User::where(function($q) use ($query) {
+    //        $q->where('first_name', 'like', "%$query%")
+    //          ->orWhere('middle_name', 'like', "%$query%")
+    //          ->orWhere('last_name', 'like', "%$query%");
+    //    }) ->orderBy('created_at', 'desc')->paginate(5);
+
+
         return view('admin.users.index', compact('users','departments'));
     }
     public function create()
@@ -99,13 +95,13 @@ public function store(Request $request)
     $departments = Department::all();
     $clickedUserId = $user->id;
 
-    $users->each(function ($item) use ($clickedUserId) {
-        if ($item->id == $clickedUserId) {
-            $item->profile_image_path = $item->image
-                ? asset('user/' . $item->image)
-                : asset('user/default.jpg');
-        }
-    });
+    // $users->each(function ($item) use ($clickedUserId) {
+    //     if ($item->id == $clickedUserId) {
+    //         $item->profile_image_path = $item->image
+    //             ? asset('user/' . $item->image)
+    //             : asset('user/default.jpg');
+    //     }
+    // });
      return view('admin.users.edit', compact("users","clickedUserId", "permissions",'departments'));
 }
 

@@ -172,8 +172,7 @@ public function show( $letter)
 
 
        return view('letter.letter.show', compact('letter', 'destinationNode','filePath'));
-     // return view('letter.letter.show', compact('filePath'));
-     // return response()->file($filePath,['content-Type'=>'application/pdf']);
+
     }
 
     /**
@@ -270,7 +269,13 @@ public function show( $letter)
 
     public function printLetter(Letter $letter)
     {
-        return view('letter.letter.print', compact('letter'));
+        $totalWaitingTime = 0; // Initialize a variable to store the total waiting time
+      foreach ($letter->letterType->routes as $route){
+      foreach ($route->nodes as $node) {
+    $totalWaitingTime += $node->estimated_waiting_time; // Add the current node's waiting time to the total
+}
+}
+        return view('letter.letter.print', compact('letter','totalWaitingTime'));
 
     }
 }

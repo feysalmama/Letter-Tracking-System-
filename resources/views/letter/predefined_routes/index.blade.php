@@ -42,7 +42,7 @@
                                                 <span>{{ $route->office_name }}</span>
                                             </td>
                                             <td class="py-3 px-6 text-center dark:text-white">
-                                                <span>{{ $route->totalWaitingTime }}</span>
+                                                {{-- <span>{{ $route->totalWaitingTime }}</span> --}}
                                             </td>
                                             <td class="py-3 px-6 text-center dark:text-white">
                                                 <span>{{ $route->in_or_out_office }}</span>
