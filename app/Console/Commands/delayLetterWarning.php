@@ -53,8 +53,11 @@ class delayLetterWarning extends Command
 
            // retrieve the current user department manaager email
              $managerEmails = User::where('department_id', $departmentId)->where('role_with_department', 'Manager')->pluck('email')  ->toArray();;
-            dd($managerEmails);
-               Notification::route('mail', $managerEmails)->notify(new LetterProgressingNotification($letter, $currentNode));
+            // dd($managerEmails);
+            // Trigger the DelayedLetterEvent event
+                event(new DelayedLetterEvent($letter, $managerEmails, $currentNode));
+
+
 
         }
        }

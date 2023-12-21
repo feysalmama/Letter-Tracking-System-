@@ -11,7 +11,8 @@
             <div class="flex flex-col">
                 <div class="space-y-8 divide-y divide-gray-200 w-full mt-10">
 
-                    <form method="POST" action="{{route('letter.predefined-routes.update',$predefined_route)}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('letter.predefined-routes.update', $predefined_route) }}"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid gap-6 mb-6 md:grid-cols-2 shadow-lg p-6">
@@ -19,15 +20,16 @@
                                 <label for="name"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Name</label>
-                                <input type="text" id="name" name="name" value="{{ $predefined_route->name }}"
+                                <input type="text" id="name" name="name"
+                                    value="{{ $predefined_route->name }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Name" required>
                                 @error('name')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
 
-                            </div>  
-                            <div>
+                            </div>
+                            {{-- <div>
                                 <label for="estimated_waiting_time"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estimated_waiting_time
                                     number</label>
@@ -37,13 +39,14 @@
                                 @error('estimated_waiting_time')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
-                            </div>        
-                            
+                            </div>
+                             --}}
                             <div>
                                 <label for="Office Name"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Office
                                     Name</label>
-                                <input type="text" id="office_name" name="office_name"   value="{{ $predefined_route->office_name }}"
+                                <input type="text" id="office_name" name="office_name"
+                                    value="{{ $predefined_route->office_name }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="office name" required>
                                 @error('office_name')
@@ -51,18 +54,22 @@
                                 @enderror
                             </div>
                             <div class="">
-                                <label for="in_or_out_office" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">In or out Office</label>
+                                <label for="in_or_out_office"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">In or out
+                                    Office</label>
                                 <input type="hidden" name="in_or_out_office" value="0">
-                                <input type="checkbox" id="in_or_out_office" name="in_or_out_office" value="1" class="rounded-lg" @if($predefined_route->in_or_out_office == 1) checked @endif>
+                                <input type="checkbox" id="in_or_out_office" name="in_or_out_office" value="1"
+                                    class="rounded-lg" @if ($predefined_route->in_or_out_office == 1) checked @endif>
                             </div>
-                            
+
                             <div>
                                 <label for="zone"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zone
-                                    </label>
-                                <input type="text" id="zone" name="zone"  value="{{ $predefined_route->zone }}"
+                                </label>
+                                <input type="text" id="zone" name="zone"
+                                    value="{{ $predefined_route->zone }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="zone" >
+                                    placeholder="zone">
                                 @error('zone')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
@@ -70,27 +77,32 @@
                             <div class="">
                                 <label for="woreda"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">woreda</label>
-                                <input type="text" id="woreda" name="woreda" value="{{ $predefined_route->woreda }}"
+                                <input type="text" id="woreda" name="woreda"
+                                    value="{{ $predefined_route->woreda }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="woreda" >
-                                        @error('woreda')
+                                    placeholder="woreda">
+                                @error('woreda')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div>
                                 <label for="letter_type_id"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Letter Type</label>                                   
-                                    <select name="letter_type_id" id="letter_type_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        @foreach ($letterTypes as $letterType)
-                                            <option value="{{ $letterType->id }}" @if ($predefined_route->letter_type_id == $letterType->id) selected @endif >{{ $letterType->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Letter
+                                    Type</label>
+                                <select name="letter_type_id" id="letter_type_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    @foreach ($letterTypes as $letterType)
+                                        <option value="{{ $letterType->id }}"
+                                            @if ($predefined_route->letter_type_id == $letterType->id) selected @endif>{{ $letterType->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 @error('letter_type_id')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                     
+
                         </div>
                         <button type="submit"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>

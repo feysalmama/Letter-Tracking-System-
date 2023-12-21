@@ -12,6 +12,10 @@ public function check(){
 
     return view('/home.check');
 }
+public function undefine(){
+
+    return view('/home.undefine');
+}
 public function status(Request $request){
 
 // get the secret code entered by the user
@@ -24,6 +28,8 @@ $letter = Letter::where('unique_code', $secretCode)->first();
 
 
 if($letter){
+
+
 
     $status = $letter->status;
     // get current node for this letter contain this unique code
@@ -39,15 +45,14 @@ if($letter){
 
    $nodes = Node::whereHas('routes', function ($query) use ($routeId) {
     $query->where('route_id', $routeId);
-})->get();
-// dd($nodes);
+    })->get();
 
-
-
-
-
+    foreach ($nodes as $index => $node){
+    $movement = $letter->movements->where('node_id', $node->id)->first();
+    }
+    return view('/home.status', compact('status','letter','currentNode','countNode','nodes','movement'));
+}else{
+    return view('/home.undefine');
 }
-
-    return view('/home.status', compact('status','letter','currentNode','countNode','nodes'));
 }
 }

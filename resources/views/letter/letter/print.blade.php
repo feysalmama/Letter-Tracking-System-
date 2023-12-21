@@ -11,10 +11,6 @@
 
         <!-- Display nodes related to this route -->
         <ol>
-            @php
-                $totalWaitingTime = 0; // Initialize a variable to store the total waiting time
-            @endphp
-
             @foreach ($route->nodes as $node)
                 <li>
                     Office: {{ $node->office_name }}
@@ -24,10 +20,6 @@
                             Woreda: {{ $node->woreda ?? 'N/A' }} --}}
                     Estimated Waiting Time: {{ $node->estimated_waiting_time }}Day;
                 </li>
-
-                @php
-                    $totalWaitingTime += $node->estimated_waiting_time; // Add the current node's waiting time to the total
-                @endphp
             @endforeach
 
         </ol>

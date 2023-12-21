@@ -52,7 +52,7 @@ class RouteController extends Controller
         // Validate the incoming request data
         $validated = $request->validate([
             'name' => 'required|string',
-            'estimated_waiting_time' => 'required|integer',
+            // 'estimated_waiting_time' => 'required|integer',
             'office_name' => 'required|string',
             'in_or_out_office' => 'boolean|nullable',
             'zone' => 'string|nullable',
@@ -103,7 +103,7 @@ class RouteController extends Controller
            // Validate the incoming request data
            $validated = $request->validate([
             'name' => 'required|string',
-            'estimated_waiting_time' => 'required|integer',
+            // 'estimated_waiting_time' => 'required|integer',
             'office_name' => 'required|string',
             'in_or_out_office' => 'boolean|nullable',
             'zone' => 'string|nullable',

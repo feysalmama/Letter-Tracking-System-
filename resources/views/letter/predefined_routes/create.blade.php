@@ -28,7 +28,7 @@
 
                             </div>
 
-
+                            {{-- 
                             <div>
                                 <label for="estimated_waiting_time"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estimated_waiting_time
@@ -39,7 +39,7 @@
                                 @error('estimated_waiting_time')
                                     <span class="text-red-400 text-sm">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div>
                                 <label for="Office Name"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Office

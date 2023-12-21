@@ -33,14 +33,18 @@ Route::get('/', function () {
 
 Route::get('/check', [HomeController::class, 'check'])->name('home.check');
 Route::post('/status', [HomeController::class, 'status'])->name('home.status');
+Route::post('/undefine', [HomeController::class, 'status'])->name('home.undefine');
 
 Route::get('/dashboard', function () {
     $user = Auth::user();
 
     if ($user->hasRole('admin')) {
         $letterCount = Letter::all()->count();
+        $letterApprovedCount = Letter::where('status', 'Completed')->count();
+        $letterPendingCount = Letter::where('status', 'Pending')->count();
         $userCount = User::all()->count();
-        return view('dashboard', compact('userCount', 'letterCount'));
+
+        return view('dashboard', compact('userCount', 'letterCount','letterPendingCount','letterApprovedCount'));
     } else {
         return view('/home.index');
     }
