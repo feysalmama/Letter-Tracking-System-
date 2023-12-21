@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-sm  text-gray-800 dark:text-gray-900 leading-tight">
-            {{ __('Create letter') }}
+            {{ __('Letter') }}
         </h2>
     </x-slot>
 
@@ -25,7 +25,7 @@
                 <div class="mb-4">
                     <label for="destinationNode" class="block text-sm font-medium text-gray-700">Destination
                         Node:</label>
-                    <input type="text" id="destinationNode" value="{{ $destinationNode->name }}" class="form-input"
+                    <input type="text" id="destinationNode" value="{{ $destinationNode }}" class="form-input"
                         disabled>
                 </div>
 

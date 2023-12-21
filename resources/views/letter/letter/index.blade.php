@@ -46,7 +46,7 @@
                                             <td class="py-3 px-6 text-center">
                                                 <div class="flex item-center justify-center">
 
-                                                    <a href="{{ route('letter.letter.print', $letter->id) }}"
+                                                    <a href="{{ route('letter.letter.show', $letter->id) }}"
                                                         class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110 group">
                                                         <div class="relative">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -62,10 +62,6 @@
 
                                                         </div>
                                                     </a>
-
-
-
-
 
                                                     <a href="{{ route('letter.letter.edit', $letter->id) }}"
                                                         class="w-4 mr-2 transform dark:text-white hover:text-purple-500 hover:scale-110">
