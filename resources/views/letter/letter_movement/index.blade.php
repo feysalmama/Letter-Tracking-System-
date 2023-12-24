@@ -149,7 +149,7 @@
                                                     <span>{{ $letterMovement->letter->unique_code }}</span>
                                                 </td>
                                                 <td class="py-3 px-6 text-left dark:text-white">
-                                                    <span>{{ $letterMovement->node->name }}</span>
+                                                    <span>{{ $letterMovement->node?->name }}</span>
                                                 </td>
                                                 <td class="py-3 px-6 text-left dark:text-white">
                                                     <span>{{ $letterMovement->movement_date }}</span>
